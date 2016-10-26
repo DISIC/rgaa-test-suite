@@ -1,6 +1,6 @@
 import {render, createElement} from 'react';
 import ReactBootstrap from 'react-bootstrap';
-import RgaaReactBootstrap from 'rgaa-react-bootstrap';
+import RgaaReactBootstrap from 'rgaa_react-bootstrap';
 import {tabPanel, createWrapper} from '../src';
 
 

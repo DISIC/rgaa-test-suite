@@ -1,5 +1,5 @@
 import {render, createElement} from 'react';
-import RgaaReactBootstrap from 'rgaa-react-bootstrap';
+import RgaaReactBootstrap from 'rgaa_react-bootstrap';
 import {progressBar, createWrapper} from '../src';
 
 
