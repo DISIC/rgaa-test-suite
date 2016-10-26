@@ -26,7 +26,7 @@
     "mocha": "^2.4.5",
     "react": "^0.13.3",
     "react-bootstrap": "^0.19.1",
-    "rgaa-react-bootstrap": "^1.0.0",
+    "rgaa_react-bootstrap": "^1.0.0",
     "webpack": "^1.13.0"
   }
 }
