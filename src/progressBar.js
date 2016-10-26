@@ -41,7 +41,7 @@ export default function createProgressBarTest(factory, makeLabel = defaultMakeLa
 
 			it(
 				'Test 1.2 : Le composant respecte-t-il une de ces conditions ?'
-				+ '\n\t- Le composant est constitué d\'un élément graphique qui possède une alternative pertinente'
+				+ '\n\t- Le composant est constitué d\'une image qui possède un attribut alt pertinent.'
 				+ '\n\t- Le composant possède une propriété aria-labelledby="[id]" référençant un passage de texte faisant office de nom'
 				+ '\n\t- Le composant possède un attribut title faisant office de nom',
 				function() {
@@ -79,7 +79,7 @@ export default function createProgressBarTest(factory, makeLabel = defaultMakeLa
 				'Test 1.3 : Chaque progression, dont la valeur courante est connue respecte-t-elle ces conditions ?'
 				+ '\n\t- Le composant possède une propriété aria-valuenow="[valeur courante]"'
 				+ '\n\t- Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + texte]"'
-				+ '\n\t- La valeur de la propriété aria-valuenow est mise à jour selon la progression',
+				+ '\n\t- La valeur de la propriété aria-valuenow est mise à jour selon la progression'
 				+ '\n\t- La valeur de la propriété aria-valuetext est mise à jour selon la progression',
 				function() {
 					const props = {
@@ -113,6 +113,12 @@ export default function createProgressBarTest(factory, makeLabel = defaultMakeLa
 					expect(progressBar.getAttribute('aria-valuenow')).to.be.oneOf([null, '']);
 					expect(progressBar.getAttribute('aria-valuetext')).to.be.oneOf([null, '']);
 				}
+			);
+
+			it(
+				'Test 1.5 : Chaque progression qui concerne une région spécifique d\'un document respecte-t-elle ces conditions ?'
+				+ '\n\t- La région concernée possède une propriété aria-describedby="[id]"'
+				+ '\n\t- La région concernée possède une propriété aria-busy="true" durant toute la durée de la progression.'
 			);
 		});
 	};
