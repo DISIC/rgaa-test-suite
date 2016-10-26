@@ -54,9 +54,24 @@ export default function createProgressBarTest(factory, makeLabel = defaultMakeLa
 					const node = factory(props);
 					const progressBar = findChildByRole(node, 'progressbar');
 
-					expect(progressBar).to.satisfy((p) =>
-						(p.getAttribute('title') || p.getAttribute('aria-labelledby'))
-					);
+					expect(progressBar).to.satisfy((p) => {
+						if (p.getAttribute('title')) {
+							console.log('À VÉRIFIER : l\' attribut title est pertinent');
+							return this.skip();
+						}
+
+						if (p.getAttribute('aria-labelledby')) {
+							console.log('À VÉRIFIER : l\' attribut aria-labelledby référence un passage de texte valide.');
+							return this.skip();
+						}
+
+						if (p.querySelector('img[alt]')) {
+							console.log('À VÉRIFIER : l\' attribut alt de l\'image est pertinent.');
+							return this.skip();
+						}
+
+						return false;
+					});
 				}
 			);
 
