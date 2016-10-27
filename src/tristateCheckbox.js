@@ -7,6 +7,17 @@ import {findChildByRole} from './dom';
 const defaultMakeLabel = ({value}) => `${value}%`;
 
 
+/**
+ *
+ */
+const getChildrenCheckboxes = (node) => node.querySelectorAll('input[type=checkbox], [role=checkbox]');
+
+/**
+ *
+ */
+const isInputCheckbox = (node) => node.getAttribute('type', 'checkbox') !== undefined;
+
+
 
 /**
  *	Returns a function that tests a tristate checkbox component.
@@ -39,29 +50,35 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					};
 
 					let node = factory(props);
-					let checkbox = findChildByRole(node, 'checkbox');
+					let checkboxes = getChildrenCheckboxes(node);
+					let mainCheckbox = checkboxes[0];
 
-					expect(checkbox.getAttribute('role')).to.equal('checkbox');
-					expect(checkbox.getAttribute('tabindex')).to.equal('0');
+					expect(mainCheckbox.getAttribute('role')).to.equal('checkbox');
+					expect(mainCheckbox.getAttribute('tabindex')).to.equal('0');
 
-					expect(checkbox.getAttribute('aria-checked')).to.equal('true');
+					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 
 					props.state = false;
 					props.id = 'tristate-checkbox-not-selected';
 					node = factory(props);
-					checkbox = findChildByRole(node, 'checkbox');
-					expect(checkbox.getAttribute('aria-checked')).to.equal('false');
+					checkboxes = getChildrenCheckboxes(node);
+					mainCheckbox = checkboxes[0];
+					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 
-					const inputs = node.querySelectorAll('input[type=checkbox]');
-					const firstInput = inputs[0];
-					firstInput.checked = true;
+					const firstNestedCheckbox = checkboxes[1];
+					// Handles inputs and aria checkboxes
+					if (isInputCheckbox(firstNestedCheckbox)) {
+						firstNestedCheckbox.checked = true;
+					} else {
+						firstNestedCheckbox['aria-checked'] = true;
+					}
 
 					// Simulates change event
 					const e = new Event('change');
-					firstInput.dispatchEvent(e);
+					firstNestedCheckbox.dispatchEvent(e);
 
 					setTimeout(() => {
-						expect(checkbox.getAttribute('aria-checked')).to.equal('mixed');
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 						done();
 					}, 200);
 				}
@@ -84,11 +101,12 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						id: 'image'
 					};
 
-					let node = factory(props);
-					let checkbox = findChildByRole(node, 'checkbox');
+					const node = factory(props);
+					const checkboxes = getChildrenCheckboxes(node);
+					const mainCheckbox = checkboxes[0];
 
 
-					expect(checkbox
+					expect(mainCheckbox
 						.getElementsByTagName('img')[0]
 						.getAttribute('role'))
 					.to.equal('presentation');
@@ -97,7 +115,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 				}
 			);
 
-			describe.skip('Test 1.3 : Chaque groupement de cases à cocher respecte-t-il ces conditions ?', function() {
+			describe('Test 1.3 : Chaque groupement de cases à cocher respecte-t-il ces conditions ?', function() {
 				it('L\'élément structurant le groupe possède un role="group"',
 					function() {
 						const props = {
@@ -112,20 +130,22 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							id: 'tristate-checkbox-group'
 						};
 
-						let node = factory(props);
-						let checkbox = findChildByRole(node, 'checkbox');
+						const node = factory(props);
+						expect(node.querySelectorAll('[role=group]').length > 0).to.be.true;
+					}
+				);
 
-						const structuringNode = node.firstElementChild;
-						const structuringNodeName = structuringNode.nodeName.toLowerCase();
-						// Tristate checkbox group is valid with a fieldSet/legend so skip this test
-						if (structuringNodeName === 'fieldset') {
-							this.skip();
-						}
+				it.skip('L\'élément structurant est précédé d\'un titre',
+					function() {
+						// Don't know what it means !!!!
+						// See grid
+					}
+				);
 
-
-						if (checkbox.getAttribute('role') === 'checkbox') {
-							expect(checkbox.getAttribute('role')).to.equal('checkbox');
-						}
+				it.skip('L\'élément structurant possède une propriété aria-labelledby="[ID_titre]" référençant le titre',
+					function() {
+						// Don't know what it means !!!!
+						// See grid
 					}
 				);
 			});
@@ -145,20 +165,25 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							id: 'checkboxes-not-selected'
 						};
 
-						let node = factory(props);
-						let checkbox = findChildByRole(node, 'checkbox');
+						const node = factory(props);
+						const checkboxes = getChildrenCheckboxes(node);
+						const mainCheckbox = checkboxes[0];
 
-						const inputs = node.querySelectorAll('input[type=checkbox]');
-						for (let i = 0; i < inputs.length; i++) {
-							inputs[i].checked = false;
+						// Uncheck all nested checkboxes
+						for (let i = 1; i < checkboxes.length; i++) {
+							if (isInputCheckbox(checkboxes[i])) {
+								checkboxes[i].checked = false;
+							} else {
+								checkboxes[i]['aria-checked'] = false;
+							}
 						}
 
 						const e = new Event('change');
-						inputs[inputs.length - 1].dispatchEvent(e);
+						checkboxes[checkboxes.length - 1].dispatchEvent(e);
 
 
 						setTimeout(() => {
-							expect(checkbox.getAttribute('aria-checked')).to.equal('false');
+							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 							done();
 						}, 200);
 					}
@@ -178,18 +203,19 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							id: 'one-checkboxe-selected'
 						};
 
-						let node = factory(props);
-						let checkbox = findChildByRole(node, 'checkbox');
+						const node = factory(props);
+						const checkboxes = getChildrenCheckboxes(node);
+						const mainCheckbox = checkboxes[0];
 
-						const inputs = node.querySelectorAll('input[type=checkbox]');
-						inputs[0].checked = true;
+						// Check first nested checkbox
+						checkboxes[1].checked = true;
 
 						const e = new Event('change');
-						inputs[0].dispatchEvent(e);
+						checkboxes[1].dispatchEvent(e);
 
 
 						setTimeout(() => {
-							expect(checkbox.getAttribute('aria-checked')).to.equal('mixed');
+							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 							done();
 						}, 200);
 					}
@@ -209,20 +235,25 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							id: 'checkboxes-selected'
 						};
 
-						let node = factory(props);
-						let checkbox = findChildByRole(node, 'checkbox');
+						const node = factory(props);
+						const checkboxes = getChildrenCheckboxes(node);
+						const mainCheckbox = checkboxes[0];
 
-						const inputs = node.querySelectorAll('input[type=checkbox]');
-						for (let i = 0; i < inputs.length; i++) {
-							inputs[i].checked = true;
+						// Check all nested checkboxes
+						for (let i = 1; i < checkboxes.length; i++) {
+							if (isInputCheckbox(checkboxes[i])) {
+								checkboxes[i].checked = true;
+							} else {
+								checkboxes[i]['aria-checked'] = true;
+							}
 						}
 
 						const e = new Event('change');
-						inputs[inputs.length - 1].dispatchEvent(e);
+						checkboxes[checkboxes.length - 1].dispatchEvent(e);
 
 
 						setTimeout(() => {
-							expect(checkbox.getAttribute('aria-checked')).to.equal('true');
+							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 							done();
 						}, 200);
 					}
@@ -247,15 +278,16 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						};
 
 						const node = factory(props);
-						const checkbox = findChildByRole(node, 'checkbox');
+						const checkboxes = getChildrenCheckboxes(node);
+						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
 						const e = new Event('keydown');
 						e.keyCode = 32;
 
-						checkbox.dispatchEvent(e);
+						mainCheckbox.dispatchEvent(e);
 						setTimeout(() => {
-							expect(checkbox.getAttribute('aria-checked')).to.equal('true');
+							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 							done();
 						}, 200);
 					}
@@ -276,15 +308,16 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						};
 
 						const node = factory(props);
-						const checkbox = findChildByRole(node, 'checkbox');
+						const checkboxes = getChildrenCheckboxes(node);
+						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
 						const e = new Event('keydown');
 						e.keyCode = 32;
 
-						checkbox.dispatchEvent(e);
+						mainCheckbox.dispatchEvent(e);
 						setTimeout(() => {
-							expect(checkbox.getAttribute('aria-checked')).to.equal('false');
+							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 							done();
 						}, 200);
 					}
@@ -307,15 +340,16 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						};
 
 						const node = factory(props);
-						const checkbox = findChildByRole(node, 'checkbox');
+						const checkboxes = getChildrenCheckboxes(node);
+						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
 						const e = new Event('keydown');
 						e.keyCode = 32;
 
-						checkbox.dispatchEvent(e);
+						mainCheckbox.dispatchEvent(e);
 						setTimeout(() => {
-							expect(checkbox.getAttribute('aria-checked')).to.equal('true');
+							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 							done();
 						}, 200);
 					}
