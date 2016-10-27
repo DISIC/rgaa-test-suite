@@ -8,3 +8,4 @@ export {default as radioButton} from './radioButton';
 export {default as slider} from './slider';
 export {default as tooltip} from './tooltip';
 export {default as dialog} from './dialog';
+export {default as simpleCheckbox} from './simpleCheckbox';
