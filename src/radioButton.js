@@ -1,3 +1,7 @@
+import pending from './pending';
+
+
+
 /**
  *
  */
@@ -35,6 +39,7 @@ export default function createRadioButtonTest(factory) {
 				it('L\'élément possède un role="radio"', function() {
 					expect(buttons.length).to.equal(props.items.length);
 				});
+
 				it('Lorsque l\'élément n\'est pas sélectionné, il possède une propriété aria-checked="false"'
 					+ '\n\t  Lorsque l\'élément est sélectionné, il possède une propriété aria-checked="true', function() {
 					props.items.forEach((item, i) => {
@@ -49,8 +54,7 @@ export default function createRadioButtonTest(factory) {
 			describe('Test 1.3 : Chaque état d\'un bouton radio, symbolisé par une image, respecte-t-il une de ces conditions ?', function() {
 				it('L\'image possède un role="presentation"', function() {
 					if (!images.length) {
-						this._runnable.title += " (aucune image trouvée)";
-						return this.skip();
+						return pending(this, 'Aucune image trouvée');
 					}
 					expect(presentationImages.length).to.equal(props.items.length);
 				});
@@ -91,7 +95,6 @@ export default function createRadioButtonTest(factory) {
 
 			describe('Test 2.2 : L\'utilisation des [TOUCHES DE DIRECTION] respecte-t-elle ces conditions ?', function() {
 				// because of the previous test, the current focus is the first button of the second radiogroup
-
 				it('À partir d\'un élément, [Bas et Droit] déplace le focus sur l\'élément suivant', function() {
 					effroi.keyboard.hit('Down');
 					expect(document.activeElement).to.equal(cleanButtons.item(1));
