@@ -49,12 +49,13 @@ export default function createRadioButtonTest(factory) {
 			describe('Test 1.3 : Chaque état d\'un bouton radio, symbolisé par une image, respecte-t-il une de ces conditions ?', function() {
 				it('L\'image possède un role="presentation"', function() {
 					if (!images.length) {
+						this._runnable.title += " (aucune image trouvée)";
 						return this.skip();
 					}
 					expect(presentationImages.length).to.equal(props.items.length);
 				});
 
-				it('L\'image est une image insérée via CSS');
+				it('L\'image est une image insérée via CSS (non testable automatiquement)');
 			});
 		});
 
