@@ -29,14 +29,28 @@ const isInputCheckbox = (node) => node.getAttribute('type', 'checkbox') !== unde
 export default function createTristateCheckboxTest(factory, makeLabel = defaultMakeLabel) {
 	return function testTristateCheckbox() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
-			it(
-				'Test 1.1 : Le composant respecte-t-il ces conditions ?'
-				+ '\n\t- Le composant possède un role="checkbox"'
-				+ '\n\t- Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné'
-				+ '\n\t- Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné'
-				+ '\n\t- Le composant possède la propriété aria-checked="mixed" lorsqu\'il est partiellement sélectionné'
-				+ '\n\t- Le composant possède l\'attribut tabindex="0", si nécessaire',
-				function(done) {
+			describe('Test 1.1 : Le composant respecte-t-il ces conditions ?', function() {
+				it('- Le composant possède un role="checkbox"',	function() {
+					const props = {
+						state: true,
+						items: [
+							{label: 'Lettuce'},
+							{label: 'Tomato'},
+							{label: 'Mustard'},
+							{label: 'Sprouts'}
+						],
+						title: 'Sandwich Condiments',
+						id: 'tristate-checkbox-role'
+					};
+
+					let node = factory(props);
+					let checkboxes = getChildrenCheckboxes(node);
+					let mainCheckbox = checkboxes[0];
+
+					expect(mainCheckbox.getAttribute('role')).to.equal('checkbox');
+				});
+
+				it('- Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné', function() {
 					const props = {
 						state: true,
 						items: [
@@ -53,17 +67,45 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					let checkboxes = getChildrenCheckboxes(node);
 					let mainCheckbox = checkboxes[0];
 
-					expect(mainCheckbox.getAttribute('role')).to.equal('checkbox');
-					expect(mainCheckbox.getAttribute('tabindex')).to.equal('0');
-
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
+				});
 
-					props.state = false;
-					props.id = 'tristate-checkbox-not-selected';
-					node = factory(props);
-					checkboxes = getChildrenCheckboxes(node);
-					mainCheckbox = checkboxes[0];
+				it('- Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné', function() {
+					const props = {
+						state: false,
+						items: [
+							{label: 'Lettuce'},
+							{label: 'Tomato'},
+							{label: 'Mustard'},
+							{label: 'Sprouts'}
+						],
+						title: 'Sandwich Condiments',
+						id: 'tristate-checkbox-not-selected'
+					};
+
+					let node = factory(props);
+					let checkboxes = getChildrenCheckboxes(node);
+					let mainCheckbox = checkboxes[0];
+
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
+				});
+
+				it('- Le composant possède la propriété aria-checked="mixed" lorsqu\'il est partiellement sélectionné',	function(done) {
+					const props = {
+						state: false,
+						items: [
+							{label: 'Lettuce'},
+							{label: 'Tomato'},
+							{label: 'Mustard'},
+							{label: 'Sprouts'}
+						],
+						title: 'Sandwich Condiments',
+						id: 'tristate-checkbox-mixed'
+					};
+
+					let node = factory(props);
+					let checkboxes = getChildrenCheckboxes(node);
+					let mainCheckbox = checkboxes[0];
 
 					const firstNestedCheckbox = checkboxes[1];
 					// Handles inputs and aria checkboxes
@@ -81,14 +123,31 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 						done();
 					}, 200);
-				}
-			);
+				});
 
-			it(
-				'Test 1.2 : Chaque état de composant symbolisé par une image respecte-t-il une de ces conditions ?'
-				+ '\n\t- L\'image possède le role="presentation"'
-				+ '\n\t- L\'image est une image insérée via CSS',
-				function() {
+				it('- Le composant possède l\'attribut tabindex="0", si nécessaire', function() {
+					const props = {
+						state: true,
+						items: [
+							{label: 'Lettuce'},
+							{label: 'Tomato'},
+							{label: 'Mustard'},
+							{label: 'Sprouts'}
+						],
+						title: 'Sandwich Condiments',
+						id: 'tristate-checkbox-tabindex'
+					};
+
+					let node = factory(props);
+					let checkboxes = getChildrenCheckboxes(node);
+					let mainCheckbox = checkboxes[0];
+
+					expect(mainCheckbox.getAttribute('tabindex')).to.equal('0');
+				});
+			});
+
+			describe('Test 1.2 : Chaque état de composant symbolisé par une image respecte-t-il une de ces conditions ?', function() {
+				it('- L\'image possède le role="presentation"',	function() {
 					const props = {
 						state: true,
 						items: [
@@ -110,30 +169,31 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						.getElementsByTagName('img')[0]
 						.getAttribute('role'))
 					.to.equal('presentation');
+				});
 
+				it('- L\'image est une image insérée via CSS', function() {
 					console.log('Tester manuellement si l\'image est une image insérée via CSS');
-				}
-			);
+				});
+			});
+
 
 			describe('Test 1.3 : Chaque groupement de cases à cocher respecte-t-il ces conditions ?', function() {
-				it('L\'élément structurant le groupe possède un role="group"',
-					function() {
-						const props = {
-							state: true,
-							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
-							],
-							title: 'Sandwich Condiments',
-							id: 'tristate-checkbox-group'
-						};
+				it('L\'élément structurant le groupe possède un role="group"', function() {
+					const props = {
+						state: true,
+						items: [
+							{label: 'Lettuce'},
+							{label: 'Tomato'},
+							{label: 'Mustard'},
+							{label: 'Sprouts'}
+						],
+						title: 'Sandwich Condiments',
+						id: 'tristate-checkbox-group'
+					};
 
-						const node = factory(props);
-						expect(node.querySelectorAll('[role=group]').length > 0).to.be.true;
-					}
-				);
+					const node = factory(props);
+					expect(node.querySelectorAll('[role=group]').length > 0).to.be.true;
+				});
 
 				it.skip('L\'élément structurant est précédé d\'un titre',
 					function() {
