@@ -20,6 +20,11 @@ module.exports = function(config) {
 		reporters: [
 			'mocha'
 		],
+		mochaReporter: {
+			colors: {
+				info: 'yellow'
+			}
+		},
 		browsers: [
 			'Chrome',
 			'Firefox'
