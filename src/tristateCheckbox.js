@@ -47,7 +47,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					let checkboxes = getChildrenCheckboxes(node);
 					let mainCheckbox = checkboxes[0];
 
-					expect(mainCheckbox.getAttribute('role')).to.equal('checkbox');
+					expect(mainCheckbox).to.be.ok;
 				});
 
 				it('- Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné', function() {
@@ -324,7 +324,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : Pour chaque composant, l\'utilisation de la touche [Espace] respecte-t-elle ces conditions ?', function() {
 				it('- [Espace] permet de cocher le composant s\'il n\'est pas coché',
-					function(done) {
+					function() {
 						const props = {
 							state: false,
 							items: [
@@ -342,19 +342,15 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
-						const e = new Event('keydown');
-						e.keyCode = 32;
+						effroi.keyboard.focus(mainCheckbox);
+						effroi.keyboard.hit('Spacebar');
 
-						mainCheckbox.dispatchEvent(e);
-						setTimeout(() => {
-							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
-							done();
-						}, 200);
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 					}
 				);
 
 				it('- [Espace] permet de décocher le composant s\'il est coché',
-					function(done) {
+					function() {
 						const props = {
 							state: true,
 							items: [
@@ -372,21 +368,17 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
-						const e = new Event('keydown');
-						e.keyCode = 32;
+						effroi.keyboard.focus(mainCheckbox);
+						effroi.keyboard.hit('Spacebar');
 
-						mainCheckbox.dispatchEvent(e);
-						setTimeout(() => {
-							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
-							done();
-						}, 200);
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 					}
 				);
 			});
 
 			describe('Test 2.2 :  Pour chaque composant qui supporte un triple état, l\'utilisation de la touche [Espace] respecte-t-elle cette condition ?', function() {
 				it('- Si le composant est partiellement coché, [Espace] permet de cocher le composant',
-					function(done) {
+					function() {
 						const props = {
 							state: 'mixed',
 							items: [
@@ -404,14 +396,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
-						const e = new Event('keydown');
-						e.keyCode = 32;
+						effroi.keyboard.focus(mainCheckbox);
+						effroi.keyboard.hit('Spacebar');
 
-						mainCheckbox.dispatchEvent(e);
-						setTimeout(() => {
-							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
-							done();
-						}, 200);
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 					}
 				);
 			});

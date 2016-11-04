@@ -28,7 +28,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					let node = factory(props);
 					let checkbox = findChildByRole(node, 'checkbox');
 
-					expect(checkbox.getAttribute('role')).to.equal('checkbox');
+					expect(checkbox).to.be.ok;
 				});
 
 				it('- Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné', function() {
@@ -94,27 +94,23 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 		})
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : Pour chaque composant, l\'utilisation de la touche [Espace] respecte-t-elle ces conditions ?', function() {
-				it('- [Espace] permet de cocher le composant s\'il n\'est pas coché', function(done) {
-					const cleanProps = {
+				it('- [Espace] permet de cocher le composant s\'il n\'est pas coché', function() {
+					const props = {
 						checked: false,
 						id: 'checkbox-not-selected-keyboard'
 					};
 
-					const cleanNode = factory(cleanProps);
-					const cleanCheckbox = findChildByRole(cleanNode, 'checkbox');
+					const node = factory(props);
+					const checkbox = findChildByRole(node, 'checkbox');
 
 					// Simulates keyboard space event
-					const e = new Event('keydown');
-					e.keyCode = 32;
+					effroi.keyboard.focus(checkbox);
+					effroi.keyboard.hit('Spacebar');
 
-					cleanCheckbox.dispatchEvent(e);
-					setTimeout(() => {
-						expect(cleanCheckbox.getAttribute('aria-checked')).to.equal('true');
-						done();
-					}, 200);
+					expect(checkbox.getAttribute('aria-checked')).to.equal('true');
 				});
 
-				it('- [Espace] permet de décocher le composant s\'il est coché', function(done) {
+				it('- [Espace] permet de décocher le composant s\'il est coché', function() {
 					const props = {
 						checked: true,
 						id: 'checkbox-selected-keyboard'
@@ -124,14 +120,10 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					const checkbox = findChildByRole(node, 'checkbox');
 
 					// Simulates keyboard space event
-					const e = new Event('keydown');
-					e.keyCode = 32;
+					effroi.keyboard.focus(checkbox);
+					effroi.keyboard.hit('Spacebar');
 
-					checkbox.dispatchEvent(e);
-					setTimeout(() => {
-						expect(checkbox.getAttribute('aria-checked')).to.equal('false');
-						done();
-					}, 200);
+					expect(checkbox.getAttribute('aria-checked')).to.equal('false');
 				});
 			});
 		});
