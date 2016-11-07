@@ -34,7 +34,8 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 				});
 
 				it('Le composant possède un role="progressbar"', function() {
-					expect(this.progressBar).to.be.ok;
+					expect(this.progressBar.getAttribute('role'))
+						.to.be.ok;
 				});
 
 				it('Le composant possède une propriété aria-valuemin="[valeur minimale]"', function() {
