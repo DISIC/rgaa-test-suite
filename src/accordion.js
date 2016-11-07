@@ -51,11 +51,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					this.accordion = findChildByRole(this.node, 'tablist');
 				});
 
-				it('- Le composant possède un role="tablist"', function() {
+				it('Le composant possède un role="tablist"', function() {
 					expect(this.accordion).to.be.ok;
 				});
 
-				it('- Le composant possède la propriété aria-multiselectable="true"', function() {
+				it('Le composant possède la propriété aria-multiselectable="true"', function() {
 					expect(this.accordion.getAttribute('aria-multiselectable')).to.equal('true');
 				});
 			});
@@ -88,12 +88,12 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				});
 
 
-				it('- Le titre possède un role="tab"', function() {
+				it('Le titre possède un role="tab"', function() {
 					expect(this.titles.length).to.equal(this.props.panels.length);
 				});
 
-				it('- Le titre possède la propriété aria-selected="true" lorsque le panneau est affiché'
-					+ '\n\t  - Le titre possède la propriété aria-selected="false" lorsque le panneau est masqué',
+				it('Le titre possède la propriété aria-selected="true" lorsque le panneau est affiché'
+					+ '\n\t  Le titre possède la propriété aria-selected="false" lorsque le panneau est masqué',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const title = this.titles[i];
@@ -136,11 +136,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					resetDocument();
 				});
 
-				it('- Le panneau possède un role="tabpanel"', function() {
+				it('Le panneau possède un role="tabpanel"', function() {
 					expect(this.tabPanels.length).to.equal(this.props.panels.length);
 				});
 
-				it('- Le panneau possède la propriété aria-labelledby="[ID_header]"', function() {
+				it('Le panneau possède la propriété aria-labelledby="[ID_header]"', function() {
 					this.props.panels.forEach((panel, i) => {
 						const tabPanel = this.tabPanels[i];
 						const title = this.titles[i];
@@ -148,8 +148,8 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					});
 				});
 
-				it('- Le panneau possède la propriété aria-expanded="true" lorsque le panneau est affiché'
-					+ '\n\t  - Le panneau possède la propriété aria-expanded="false" lorsque le panneau est masqué',
+				it('Le panneau possède la propriété aria-expanded="true" lorsque le panneau est affiché'
+					+ '\n\t  Le panneau possède la propriété aria-expanded="false" lorsque le panneau est masqué',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const tabPanel = this.tabPanels[i];
@@ -159,8 +159,8 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					}
 				);
 
-				it('- Le panneau possède la propriété aria-hidden="false" lorsque le panneau est affiché'
-					+ '\n\t  - Le panneau possède la propriété aria-expanded="true" lorsque le panneau est masqué',
+				it('Le panneau possède la propriété aria-hidden="false" lorsque le panneau est affiché'
+					+ '\n\t  Le panneau possède la propriété aria-expanded="true" lorsque le panneau est masqué',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const tabPanel = this.tabPanels[i];
