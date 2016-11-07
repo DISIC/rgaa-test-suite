@@ -9,59 +9,61 @@ import describeSome from './describeSome';
 export default (factory) => () =>
 	describe('Motif de conception ARIA Tabpanel', function() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
-			const props = {
-				panels: [
-					{
-						title: 'Header 1',
-						content: 'Content 1',
-						selected: false
-					},
-					{
-						title: 'Header 2',
-						content: 'Content 2',
-						selected: true
-					},
-					{
-						title: 'Header 3',
-						content: 'Content 3',
-						selected: false
-					}
-				]
-			};
+			before(function() {
+				this.props = {
+					panels: [
+						{
+							title: 'Header 1',
+							content: 'Content 1',
+							selected: false
+						},
+						{
+							title: 'Header 2',
+							content: 'Content 2',
+							selected: true
+						},
+						{
+							title: 'Header 3',
+							content: 'Content 3',
+							selected: false
+						}
+					]
+				};
 
-			const node = factory(props);
-			const tabList = findChildByRole(node, 'tablist');
-			const tabs = findChildrenByRole(tabList, 'tab');
-			const tabPanels = findChildrenByRole(node, 'tabpanel');
+				this.node = factory(this.props);
+				this.tabList = findChildByRole(this.node, 'tablist');
+				this.tabs = findChildrenByRole(this.tabList, 'tab');
+				this.tabPanels = findChildrenByRole(this.node, 'tabpanel');
+			});
 
 			describe('Test 1.1: Le composant englobant les titres des onglets possède-t-il un role="tablist" ?', function() {
 				it('Test 1.1', function() {
-					expect(tabs.length)
-						.to.equal(props.panels.length);
+					expect(this.tabs.length)
+						.to.equal(this.props.panels.length);
 				});
 			});
 
 			describe('Test 1.2 : Chaque titre d\'onglet respecte-t-il ces conditions ?', function() {
 				it('Le titre possède un role="tab"', function() {
-					props.panels.forEach((panel, i) => {
-						expect(tabs[i].getAttribute('role'))
+					this.props.panels.forEach((panel, i) => {
+						expect(this.tabs[i].getAttribute('role'))
 							.to.equal('tab');
 					});
 				});
 
 				it('Le titre possède une propriété aria-selected="true" lorsque le panneau est affiché', function() {
-					props.panels.forEach((panel, i) => {
+					this.props.panels.forEach((panel, i) => {
 						if (panel.selected) {
-							expect(tabs[i].getAttribute('aria-selected'))
+							expect(this.tabs[i].getAttribute('aria-selected'))
 								.to.equal('true');
 						}
 					});
 				});
 
 				it('Le titre possède une propriété aria-selected="false" lorsque le panneau est masqué', function() {
-					props.panels.forEach((panel, i) => {
+					this.props.panels.forEach((panel, i) => {
 						if (!panel.selected) {
-							expect(tabs[i].getAttribute('aria-selected'))
+							expect(this.tabs[i].getAttribute('aria-selected'))
 								.to.equal('false');
 						}
 					});
@@ -70,26 +72,24 @@ export default (factory) => () =>
 
 			describeSome('Test 1.3 : Chaque couple titre/panneau, respecte-t-il une de ces conditions ?', function() {
 				it('Le titre possède une propriété aria-controls="[id]" référençant le panneau correspondant', function() {
-					props.panels.forEach((panel, i) => {
-						expect(tabs[i].getAttribute('aria-controls'))
-							.to.equal(tabPanels[i].id);
+					this.props.panels.forEach((panel, i) => {
+						expect(this.tabs[i].getAttribute('aria-controls'))
+							.to.equal(this.tabPanels[i].id);
 					});
 				});
 
 				it('Le panneau possède une propriété aria-labelledby="[id]" référençant le titre correspondant', function() {
-					props.panels.forEach((panel, i) => {
-						expect(tabPanels[i].getAttribute('aria-labelledby'))
-							.to.equal(tabs[i].id);
+					this.props.panels.forEach((panel, i) => {
+						expect(this.tabPanels[i].getAttribute('aria-labelledby'))
+							.to.equal(this.tabs[i].id);
 					});
 				});
 			});
 
 			describe('Test 1.4 : Chaque panneau possède-t-il un role="tabpanel" ?', function() {
 				it('Test 1.4', function() {
-					const node = factory(props);
-					const tabPanels = findChildrenByRole(node, 'tabpanel');
-
-					expect(tabPanels.length).to.equal(props.panels.length);
+					expect(this.tabPanels.length)
+						.to.equal(this.props.panels.length);
 				});
 			});
 		});
