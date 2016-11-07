@@ -35,3 +35,9 @@ export const findChildrenByRole = (element, role) => {
  */
 export const findChildByRole = (element, role) =>
 	findChildrenByRole(element, role).item(0);
+
+/**
+ * Hardcore reset
+ */
+export const resetDocument = () =>
+	document.documentElement.innerHTML = '';
