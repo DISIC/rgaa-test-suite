@@ -9,13 +9,13 @@ export default function createRadioButtonTest(factory) {
 	return function testRadioButton() {
 		before(function() {
 			this.props = {
-				id: 'le-meilleur',
-				label: 'C\'est quoi le meilleur ?',
+				id: 'un-groupe-avec-un-bouton-activé',
+				label: 'Je suis le titre du groupe',
 				items: [
-					{text: 'De la mousse au chocolat'},
-					{text: 'La pizza', checked: true},
-					{text: 'L\'huile d\'olive'},
-					{text: 'Une salade de fruits'}
+					{text: 'Je suis le 1er élément'},
+					{text: 'Je suis le 2ème élément et je suis coché par défaut', checked: true},
+					{text: 'Je suis le 3ème élément'},
+					{text: 'Je suis le 4ème élément'}
 				]
 			};
 			this.node = factory(this.props);
@@ -61,20 +61,22 @@ export default function createRadioButtonTest(factory) {
 					expect(this.presentationImages.length).to.equal(props.items.length);
 				});
 
-				it('L\'image est une image insérée via CSS (non testable automatiquement)');
+				it('L\'image est une image insérée via CSS', function() {
+					return pending(this, 'Non testable automatiquement');
+				});
 			});
 		});
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			before(function() {
 				const cleanProps = {
-					id: 'le-pire',
-					label: 'C\'est quoi le pire ?',
+					id: 'un-groupe-sans-rien-activé',
+					label: 'Je suis le titre du groupe sans bouton activé',
 					items: [
-						{text: 'Le coeur de palmier'},
-						{text: 'Une endive'},
-						{text: 'La banane'},
-						{text: 'La choucroute'}
+						{text: '1er bouton'},
+						{text: '2ème bouton'},
+						{text: '3ème bouton'},
+						{text: '4ème bouton'}
 					]
 				};
 				this.cleanNode = factory(cleanProps);
