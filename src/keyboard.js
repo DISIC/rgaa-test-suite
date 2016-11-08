@@ -1,3 +1,7 @@
+import tabbable from 'tabbable';
+
+
+
 /**
  *
  */
@@ -33,19 +37,11 @@ export const press = (keycodeOrName, element = document.activeElement) => {
 	keyEvent('up', keycodeOrName, element);
 };
 
-const focusableElements = () =>
-	document.querySelectorAll(
-		'input:not(:disabled), textarea:not(:disabled), '
-		+ 'a[href]:not(:disabled):not(:empty), button:not(:disabled), '
-		+ 'select:not(:disabled), '
-		+ '[tabindex="0"]:not(:disabled)'
-	);
-
 /**
  *
  */
 export const tab = (reverse = false) => {
-	const elements = focusableElements();
+	const elements = tabbable(document.body);
 	if (!elements.length) {
 		return;
 	}
