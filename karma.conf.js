@@ -9,7 +9,8 @@ var fullPath = path.resolve.bind(null, __dirname);
 module.exports = function(config) {
 	config.set({
 		files: [
-			//include effroi library - no need for a karma plugin
+			{pattern: require.resolve('jquery/dist/jquery'), watched: false},
+			{pattern: require.resolve('jquery-nstslider/dist/jquery.nstSlider'), watched: false},
 			{pattern: require.resolve('effroi'), watched: false},
 			'test/*.js'
 		],
