@@ -26,7 +26,11 @@ describe(
 			return createElement(
 				ReactBootstrap.Panel,
 				panelProps,
-				panel.content
+				createElement('div', {
+					dangerouslySetInnerHTML: {
+						__html: panel.content
+					}
+				})
 			);
 		});
 
