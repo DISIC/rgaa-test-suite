@@ -1,4 +1,6 @@
+import {random} from 'lodash';
 import {findChildByRole} from './dom';
+import describeSome from './describeSome';
 
 
 
@@ -10,95 +12,123 @@ const defaultMakeLabel = ({value}) => `${value}%`;
 
 
 /**
- *	Returns a function that tests aa progress bar component.
+ *	Returns a function that tests a progress bar component.
  *
  *	@param function factory A factory function that takes
  *		a map of options and returns a DOM node containing a
  *		progress bar.
  */
-export default function createProgressBarTest(factory, makeLabel = defaultMakeLabel) {
-	return function testProgressBar() {
+export default (factory, makeLabel = defaultMakeLabel) => () =>
+	describe('Motif de conception ARIA Progressbar', function() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
-			it(
-				'Test 1.1 : Le composant respecte-t-il ces conditions ?'
-				+ '\n\t- Le composant possède un role="progressbar"'
-				+ '\n\t- Le composant possède une propriété aria-valuemin="[valeur minimale]"'
-				+ '\n\t- Le composant possède une propriété aria-valuemax="[valeur maximale]"',
-				function() {
-					const props = {
-						min: 10,
-						max: 90,
-						value: 50
+			describe('Test 1.1 : Le composant respecte-t-il ces conditions ?', function() {
+				before(function() {
+					this.props = {
+						min: random(0, 30),
+						max: random(70, 100),
+						value: random(30, 70)
 					};
 
-					const node = factory(props);
-					const progressBar = findChildByRole(node, 'progressbar');
+					this.node = factory(this.props);
+					this.progressBar = findChildByRole(this.node, 'progressbar');
+				});
 
-					expect(progressBar.getAttribute('aria-valuemin')).to.equal('10');
-					expect(progressBar.getAttribute('aria-valuemax')).to.equal('90');
-				}
-			);
+				it('Le composant possède un role="progressbar"', function() {
+					expect(this.progressBar.getAttribute('role'))
+						.to.be.ok;
+				});
 
-			it(
-				'Test 1.2 : Le composant respecte-t-il une de ces conditions ?'
-				+ '\n\t- Le composant est constitué d\'un élément graphique qui possède une alternative pertinente'
-				+ '\n\t- Le composant possède une propriété aria-labelledby="[id]" référençant un passage de texte faisant office de nom'
-				+ '\n\t- Le composant possède un attribut title faisant office de nom',
-				function() {
-					const props = {
-						min: 10,
-						max: 90,
-						value: 50
+				it('Le composant possède une propriété aria-valuemin="[valeur minimale]"', function() {
+					expect(Number(this.progressBar.getAttribute('aria-valuemin')))
+						.to.equal(this.props.min);
+				});
+
+				it('Le composant possède une propriété aria-valuemax="[valeur maximale]"', function() {
+					expect(Number(this.progressBar.getAttribute('aria-valuemax')))
+						.to.equal(this.props.max);
+				});
+			});
+
+			describeSome('Test 1.2 : Le composant respecte-t-il une de ces conditions ?', function() {
+				before(function() {
+					this.props = {
+						min: random(0, 30),
+						max: random(70, 100),
+						value: random(30, 70)
 					};
 
-					const node = factory(props);
-					const progressBar = findChildByRole(node, 'progressbar');
+					this.node = factory(this.props);
+					this.progressBar = findChildByRole(this.node, 'progressbar');
+				});
 
-					expect(progressBar).to.satisfy((p) =>
-						(p.getAttribute('title') || p.getAttribute('aria-labelledby'))
-					);
-				}
-			);
+				it('Le composant est constitué d\'une image qui possède un attribut alt pertinent.', function() {
+					expect(this.progressBar.getAttribute('title'))
+						.to.not.be.empty;
+				});
 
-			it(
-				'Test 1.3 : Chaque progression, dont la valeur courante est connue respecte-t-elle ces conditions ?'
-				+ '\n\t- Le composant possède une propriété aria-valuenow="[valeur courante]"'
-				+ '\n\t- Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + texte]"'
-				+ '\n\t- La valeur de la propriété aria-valuenow est mise à jour selon la progression',
-				+ '\n\t- La valeur de la propriété aria-valuetext est mise à jour selon la progression',
-				function() {
-					const props = {
-						min: 10,
-						max: 90,
-						value: 50
+				it('Le composant possède une propriété aria-labelledby="[ID_texte]" référençant un passage de texte faisant office de nom', function() {
+					expect(this.progressBar.getAttribute('aria-labelledby'))
+						.to.not.be.empty;
+				});
+
+				it('Le composant possède un attribut title faisant office de nom', function() {
+					expect(this.progressBar.querySelector('img[alt]'))
+						.to.not.be.empty;
+				});
+			});
+
+			describe('Test 1.3 : Chaque progression, dont la valeur courante est connue respecte-t-elle ces conditions ?', function() {
+				before(function() {
+					this.props = {
+						min: random(0, 30),
+						max: random(70, 100),
+						value: random(30, 70)
 					};
 
-					const node = factory(props);
-					const progressBar = findChildByRole(node, 'progressbar');
+					this.node = factory(this.props);
+					this.progressBar = findChildByRole(this.node, 'progressbar');
+				});
 
-					expect(progressBar.getAttribute('aria-valuenow')).to.equal('50');
-					expect(progressBar.getAttribute('aria-valuetext')).to.equal(makeLabel(props));
-				}
-			);
+				it('Le composant possède une propriété aria-valuenow="[valeur courante]"', function() {
+					expect(Number(this.progressBar.getAttribute('aria-valuenow')))
+						.to.equal(this.props.value);
+				});
 
-			it(
-				'Test 1.4 : Chaque progression, dont la valeur courante est inconnue respecte-t-elle ces conditions ?'
-				+ '\n\t- Le composant ne possède pas de propriété aria-valuenow'
-				+ '\n\t- Le composant ne possède pas de propriété aria-valuetext',
-				function() {
-					const props = {
-						min: 10,
-						max: 90,
+				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + texte]"', function() {
+					expect(this.progressBar.getAttribute('aria-valuetext'))
+						.to.equal(makeLabel(this.props));
+				});
+
+				it('La valeur de la propriété aria-valuenow est mise à jour selon la progression');
+				it('La valeur de la propriété aria-valuetext est mise à jour selon la progression');
+			});
+
+			describe('Test 1.4 : Chaque progression, dont la valeur courante est inconnue respecte-t-elle ces conditions ?', function() {
+				before(function() {
+					this.props = {
+						min: random(0, 30),
+						max: random(70, 100),
 						value: undefined
 					};
 
-					const node = factory(props);
-					const progressBar = findChildByRole(node, 'progressbar');
+					this.node = factory(this.props);
+					this.progressBar = findChildByRole(this.node, 'progressbar');
+				});
 
-					expect(progressBar.getAttribute('aria-valuenow')).to.be.oneOf([null, '']);
-					expect(progressBar.getAttribute('aria-valuetext')).to.be.oneOf([null, '']);
-				}
-			);
+				it('Le composant ne possède pas de propriété aria-valuenow', function() {
+					expect(this.progressBar.getAttribute('aria-valuenow'))
+						.to.not.be.ok;
+				});
+
+				it('Le composant ne possède pas de propriété aria-valuetext', function() {
+					expect(this.progressBar.getAttribute('aria-valuetext'))
+						.to.not.be.ok;
+				});
+			});
+
+			describe('Test 1.5 : Chaque progression qui concerne une région spécifique d\'un document respecte-t-elle ces conditions ?', function() {
+				it('La région concernée possède une propriété aria-describedby="[ID_composant]"');
+				it('La région concernée possède une propriété aria-busy="true" durant toute la durée de la progression');
+			});
 		});
-	};
-}
+	});
