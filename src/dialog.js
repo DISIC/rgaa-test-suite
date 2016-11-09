@@ -1,7 +1,9 @@
 import describeSome from './describeSome';
-import {focusableElements, focus, tab, shiftTab} from './keyboard';
+import {focusableElements, press, focus, tab, shiftTab} from './keyboard';
 
 
+const isDialogOpened = (dialog) =>
+	dialog && $(dialog).is(':visible');
 
 /**
  *
@@ -71,25 +73,26 @@ export default function createDialogTest(factory) {
 		});
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
+			const cleanProps = {
+				id: 'dialog-tab',
+				title: 'Header',
+				content: 'This the content of my dialog'
+			};
+			const {open, close} = factory(cleanProps);
+
+			const cleanDialog = document.body.querySelector('[role="dialog"]');
+			const cleanAlertDialog = document.body.querySelector('[role="alertdialog"]');
+			const cleanContainer = cleanDialog || cleanAlertDialog;
+
+			// Add at least two inputs in dialog to navigate between them
+			const cleanInput = document.createElement('input');
+			cleanInput.setAttribute('type', 'text');
+			cleanContainer.appendChild(cleanInput.cloneNode(true));
+			cleanContainer.appendChild(cleanInput.cloneNode(true));
+
+			const cleanFocusables = focusableElements();
+
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-elle ces conditions ?', function() {
-				const cleanProps = {
-					id: 'dialog-tab',
-					title: 'Header',
-					content: 'This the content of my dialog'
-				};
-				const {open, close} = factory(cleanProps);
-
-				const cleanDialog = document.body.querySelector('[role="dialog"]');
-				const cleanAlertDialog = document.body.querySelector('[role="alertdialog"]');
-				const cleanContainer = cleanDialog || cleanAlertDialog;
-
-				// Add at least two inputs in dialog to navigate between them
-				const cleanInput = document.createElement('input');
-				cleanInput.setAttribute('type', 'text');
-				cleanContainer.appendChild(cleanInput.cloneNode(true));
-				cleanContainer.appendChild(cleanInput.cloneNode(true));
-
-				const cleanFocusables = focusableElements();
 
 				it('La tabulation permet d\'atteindre l\'élément suivant et précédent du composant', function() {
 					open();
@@ -109,6 +112,16 @@ export default function createDialogTest(factory) {
 					focus(cleanFocusables[lastIndex]);
 					tab();
 					expect(cleanFocusables[0]).to.equal(document.activeElement);
+				});
+			});
+
+			describe('Test 2.2 :  L\'utilisation de la touche [ESC] permet-t-elle de fermer la fenêtre ?', function() {
+				it('Cette règle est-elle respectée ?', function() {
+					// Not working
+					// press('esc');
+					effroi.keyboard.hit('Esc');
+
+					expect(cleanContainer).to.not.satisfy(isDialogOpened);
 				});
 			});
 		});
