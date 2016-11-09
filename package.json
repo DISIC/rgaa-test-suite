@@ -31,5 +31,8 @@
     "react-bootstrap": "^0.19.1",
     "rgaa_react-bootstrap": "^1.0.0",
     "webpack": "^1.13.0"
+  },
+  "dependencies": {
+    "tabbable": "^1.0.4"
   }
 }
