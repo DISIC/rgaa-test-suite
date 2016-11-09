@@ -73,45 +73,48 @@ export default function createDialogTest(factory) {
 		});
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
-			const cleanProps = {
-				id: 'dialog-tab',
-				title: 'Header',
-				content: 'This the content of my dialog'
-			};
-			const {open, close} = factory(cleanProps);
+			before(function() {
+				const cleanProps = {
+					id: 'dialog-tab',
+					title: 'Header',
+					content: 'This the content of my dialog'
+				};
+				const result = factory(cleanProps);
+				this.open = result.open;
 
-			const cleanDialog = document.body.querySelector('[role="dialog"]');
-			const cleanAlertDialog = document.body.querySelector('[role="alertdialog"]');
-			const cleanContainer = cleanDialog || cleanAlertDialog;
+				const cleanDialog = document.body.querySelector('[role="dialog"]');
+				const cleanAlertDialog = document.body.querySelector('[role="alertdialog"]');
+				this.cleanContainer = cleanDialog || cleanAlertDialog;
 
-			// Add at least two inputs in dialog to navigate between them
-			const cleanInput = document.createElement('input');
-			cleanInput.setAttribute('type', 'text');
-			cleanContainer.appendChild(cleanInput.cloneNode(true));
-			cleanContainer.appendChild(cleanInput.cloneNode(true));
+				// Add at least two inputs in dialog to navigate between them
+				const cleanInput = document.createElement('input');
+				cleanInput.setAttribute('type', 'text');
+				this.cleanContainer.appendChild(cleanInput.cloneNode(true));
+				this.cleanContainer.appendChild(cleanInput.cloneNode(true));
 
-			const cleanFocusables = focusableElements();
+				this.cleanFocusables = focusableElements();
+			});
 
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-elle ces conditions ?', function() {
 
 				it('La tabulation permet d\'atteindre l\'élément suivant et précédent du composant', function() {
-					open();
+					this.open();
 					tab();
-					expect(cleanFocusables[1]).to.equal(document.activeElement);
+					expect(this.cleanFocusables[1]).to.equal(document.activeElement);
 					shiftTab();
-					expect(cleanFocusables[0]).to.equal(document.activeElement);
+					expect(this.cleanFocusables[0]).to.equal(document.activeElement);
 				});
 
 				it('La tabulation est restreinte aux éléments focusables du composant', function() {
-					const lastIndex = cleanFocusables.length - 1;
+					const lastIndex = this.cleanFocusables.length - 1;
 
-					focus(cleanFocusables[0]);
+					focus(this.cleanFocusables[0]);
 					shiftTab();
-					expect(cleanFocusables[lastIndex]).to.equal(document.activeElement);
+					expect(this.cleanFocusables[lastIndex]).to.equal(document.activeElement);
 
-					focus(cleanFocusables[lastIndex]);
+					focus(this.cleanFocusables[lastIndex]);
 					tab();
-					expect(cleanFocusables[0]).to.equal(document.activeElement);
+					expect(this.cleanFocusables[0]).to.equal(document.activeElement);
 				});
 			});
 
@@ -121,7 +124,7 @@ export default function createDialogTest(factory) {
 					// press('esc');
 					effroi.keyboard.hit('Esc');
 
-					expect(cleanContainer).to.not.satisfy(isDialogOpened);
+					expect(this.cleanContainer).to.not.satisfy(isDialogOpened);
 				});
 			});
 		});
