@@ -1,6 +1,6 @@
 # Suite de tests pour composants RGAA 3
 
-Une suite de tests mocha/karma pour tester la compatibilité de composants ARIA avec le référentiel RGAA 3.
+Une suite de tests mocha/karma pour tester la conformité de composants ARIA avec le référentiel RGAA 3.
 
 ## Installation
 
@@ -15,6 +15,8 @@ Les composants devant être initialiés d'une certaine manière pour chaque test
 Typiquement, chaque test nécessite d'écrire une petite fonction pour créer le composant concerné en fonction des paramètres requis.
 
 Ce fonctionnement permet de tester des composants implémentés avec n'importe quel framework, puisque c'est à l'utilisateur de les initialiser. Cela permet à la suite de tests de rester générique, et de fonctionner avec des composants JavaScript pur, jQuery, Angular, ou React par exemple.
+
+Attention toutefois, ces tests ne sont pas exhaustifs. Certains d'entre eux ne peuvent être réalisés automatiquement, et seront donc à vérifier manuellement pour s'assurer d'une conformité totale. Ces tests seront tout de même affichés dans les résultats avec le statut skipped.
 
 ### Exemple
 
@@ -63,9 +65,58 @@ Ma super barre de progression
 Chaque test requiert des options particulières pour initialiser les composants.
 Vous trouverez ci-dessous la liste de ces options :
 
+* [Accordion](#accordion)
+* [Checkbox](#checkbox)
+* [Dialog](#dialog)
 * [ProgressBar](#progressbar)
+* [RadioButton](#radiobutton)
+* [Slider](#slider)
 * [TabPanel](#tabpanel)
 * [Tooltip](#tooltip)
+
+#### Accordion
+
+Options :
+
+```js
+{
+  // liste des onglets
+  panels: [
+    {
+      title: 'Titre', // {string} titre de l'onglet
+      content: 'Contenu', // {string} contenu de l'onglet (peut contenir du HTML)
+      selected: true // {bool} si l'onglet est actif ou non
+    }
+  ]
+}
+```
+
+#### Checkbox
+
+Options :
+
+```js
+{
+  checked: true // {bool} si la checkbox est cochée
+}
+```
+
+#### Dialog
+
+Options :
+
+```js
+{
+  title: 'Titre', // {string} titre de la modale
+  content: 'Contenu' // {string} contenu de la modale
+}
+```
+
+Pour que le test fonctionne, la factory devra renvoyer non seulement un DOMElement contenant la modale, mais également une fonction pour ouvrir la modale, et une pour la fermer. Par exemple :
+
+```js
+
+```
 
 #### ProgressBar
 
@@ -73,9 +124,39 @@ Options :
 
 ```js
 {
-	min: 0, // valeur minimale autorisée
-	max: 100, // valeur minimale autorisée
-	value: 12 // valeur courante
+	min: 0, // {int} valeur minimale autorisée
+	max: 100, // {int} valeur minimale autorisée
+	value: 50 // {int} valeur courante
+}
+```
+
+#### RadioButton
+
+Options :
+
+```js
+{
+  // liste de boutons
+  items: [
+    {
+      text: 'Premier bouton' // {string} texte du bouton
+    }
+    // ...
+  ]
+}
+```
+
+#### Slider
+
+Options :
+
+```js
+{
+  min: 0, // {int} valeur minimale autorisée
+  max: 100, // {int} valeur maximale autorisée
+  current: 50, // {int} valeur courante
+  isVertical: false, // {bool} si le slider est vertical
+  withLabel: false // {bool] si le slider est titré (aria-valuetext)
 }
 ```
 
@@ -88,10 +169,23 @@ Options :
   // liste des onglets
 	panels: [
 		{
-			title: 'Titre', // titre de l'onglet
-			content: 'Contenu', // contenu de l'onglet (peut contenir du HTML)
-			selected: true // si l'onglet est actif ou non
+			title: 'Titre', // {string} titre de l'onglet
+			content: 'Contenu', // {string} contenu de l'onglet (peut contenir du HTML)
+			selected: true // {bool} si l'onglet est actif ou non
 		}
+    // ...
 	]
 }
 ```
+
+#### Tooltip
+
+Options :
+
+```js
+{
+  text: 'Texte' // {string} texte du tooltip
+}
+```
+
+Pour que le test fonctionne, la factory devra renvoyer un élément focusable, sur lequel le tooltip sera mis en place.
