@@ -1,3 +1,5 @@
+import {render, createElement} from 'react';
+import RgaaReactBootstrap from 'rgaa_react-bootstrap';
 import {dialog as dialogTest, createWrapper} from '../src';
 
 
@@ -5,35 +7,26 @@ import {dialog as dialogTest, createWrapper} from '../src';
 /**
  *
  */
-describe(
+describe.only(
 	'JQuery Dialog test',
-	dialogTest(({id, title, content}) => {
-		const node = createWrapper(`jquery-dialog-${id}`);
-
+	dialogTest(({title, content}) => {
 		const $dialog = $(`
 			<div id="dialog" title="${title}">
-				<p>${content}</p>
+				${content}
 			</div>
 		`);
-		$dialog.appendTo(node);
 
-
-		$('#dialog').dialog({
-			dialogClass: "id-dialog",
+		$dialog.dialog({
 			autoOpen: false
 		});
 
-		function open() {
-			$('#dialog').dialog('open');
-		}
-		function close() {
-			$('#dialog').dialog('close');
-		}
-
 		return {
-			node,
-			open,
-			close
+			open() {
+				$dialog.dialog('open');
+			},
+			close() {
+				$dialog.dialog('close');
+			}
 		};
 	}
 ));
