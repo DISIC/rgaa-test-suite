@@ -8,7 +8,7 @@ import {tooltip, createWrapper} from '../src';
 /**
  *
  */
-describe.only(
+describe(
 	'React Bootstrap Tooltip',
 	tooltip((options) => {
 		const node = document.createElement('div');
