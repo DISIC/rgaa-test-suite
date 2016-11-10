@@ -32,12 +32,12 @@ import {progressBar} from 'rgaa-test-suite';
  * le composant à tester.
  */
 function progressBarFactory(options) {
-	const node = document.createElement('div');
+  const node = document.createElement('div');
   node.setAttribute('aria-valuemin', options.min);
   node.setAttribute('aria-valuemax', options.max);
   node.setAttribute('aria-value', options.value);
 
-	return node;
+  return node;
 }
 
 /**
@@ -91,6 +91,8 @@ Options :
 }
 ```
 
+[Exemple](./test/accordion.js)
+
 #### Checkbox
 
 Options :
@@ -100,6 +102,8 @@ Options :
   checked: true // {bool} si la checkbox est cochée
 }
 ```
+
+[Exemple](./test/checkbox.js)
 
 #### Dialog
 
@@ -112,11 +116,10 @@ Options :
 }
 ```
 
-Pour que le test fonctionne, la factory devra renvoyer non seulement un DOMElement contenant la modale, mais également une fonction pour ouvrir la modale, et une pour la fermer. Par exemple :
+Pour que le test fonctionne, la factory devra renvoyer une fonction pour ouvrir la modale, et une pour la fermer.
+Ceci est dû à la manière dont sont couramment implémentées les modales, qui sont souvent ajoutées à la fin de `<body />` plutôt qu'à côté de l'élement déclencheur.
 
-```js
-
-```
+[Exemple](./test/dialog.js)
 
 #### ProgressBar
 
@@ -124,11 +127,13 @@ Options :
 
 ```js
 {
-	min: 0, // {int} valeur minimale autorisée
-	max: 100, // {int} valeur minimale autorisée
-	value: 50 // {int} valeur courante
+  min: 0, // {int} valeur minimale autorisée
+  max: 100, // {int} valeur minimale autorisée
+  value: 50 // {int} valeur courante
 }
 ```
+
+[Exemple](./test/progressBar.js)
 
 #### RadioButton
 
@@ -146,6 +151,8 @@ Options :
 }
 ```
 
+[Exemple](./test/radioButton.js)
+
 #### Slider
 
 Options :
@@ -160,6 +167,8 @@ Options :
 }
 ```
 
+[Exemple](./test/slider.js)
+
 #### TabPanel
 
 Options :
@@ -167,16 +176,18 @@ Options :
 ```js
 {
   // liste des onglets
-	panels: [
-		{
-			title: 'Titre', // {string} titre de l'onglet
-			content: 'Contenu', // {string} contenu de l'onglet (peut contenir du HTML)
-			selected: true // {bool} si l'onglet est actif ou non
-		}
+  panels: [
+    {
+      title: 'Titre', // {string} titre de l'onglet
+      content: 'Contenu', // {string} contenu de l'onglet (peut contenir du HTML)
+      selected: true // {bool} si l'onglet est actif ou non
+    }
     // ...
-	]
+  ]
 }
 ```
+
+[Exemple](./test/tabPanel.js)
 
 #### Tooltip
 
@@ -189,3 +200,5 @@ Options :
 ```
 
 Pour que le test fonctionne, la factory devra renvoyer un élément focusable, sur lequel le tooltip sera mis en place.
+
+[Exemple](./test/tooltip.js)
