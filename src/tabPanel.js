@@ -7,6 +7,12 @@ import describeSome from './describeSome';
 /**
  *
  */
+const isPanelActive = (panel) =>
+	panel && $(panel).is(':visible');
+
+/**
+ *
+ */
 export default (factory) => () =>
 	describe('Motif de conception ARIA Tabpanel', function() {
 		beforeEach(function() {
@@ -62,7 +68,7 @@ export default (factory) => () =>
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1: Le composant englobant les titres des onglets possède-t-il un role="tablist" ?', function() {
-				it('Test 1.1', function() {
+				it('Cette condition est respectée', function() {
 					expect(this.tabs.length)
 						.to.equal(this.props.panels.length);
 				});
@@ -112,7 +118,7 @@ export default (factory) => () =>
 			});
 
 			describe('Test 1.4 : Chaque panneau possède-t-il un role="tabpanel" ?', function() {
-				it('Test 1.4', function() {
+				it('Cette condition est respectée', function() {
 					expect(this.panels.length)
 						.to.equal(this.props.panels.length);
 				});
@@ -187,16 +193,24 @@ export default (factory) => () =>
 			});
 
 			describe('Test 2.3 : À partir du titre d’un onglet, si le panneau n’est pas activé par défaut, la touche [ESPACE] permet-elle d’activer le panneau ?', function() {
-				it('Test 2.3', function() {
-					// We need a way to know when the panel is active.
-					this.skip();
+				it('Cette condition est respectée', function() {
+					effroi.keyboard.focus(this.selectedTab);
+					effroi.keyboard.hit('Down');
+					effroi.keyboard.hit('Spacebar');
+
+					expect(this.tabs[2])
+						.to.satisfy(isPanelActive);
 				});
 			});
 
 			describe('Test 2.4 : À partir du titre d’un onglet, si le panneau n’est pas activé par défaut, la touche [ENTER] permet-elle d’activer le panneau ?', function() {
-				it('Test 2.4', function() {
-					// We need a way to know when the panel is active.
-					this.skip();
+				it('Cette condition est respectée', function() {
+					effroi.keyboard.focus(this.selectedTab);
+					effroi.keyboard.hit('Down');
+					effroi.keyboard.hit('Enter');
+
+					expect(this.tabs[2])
+						.to.satisfy(isPanelActive);
 				});
 			});
 		});
