@@ -17,6 +17,7 @@ describe.only(
 		`);
 
 		$dialog.dialog({
+			dialogClass: "id-dialog",
 			autoOpen: false
 		});
 
