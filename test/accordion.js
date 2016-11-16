@@ -10,7 +10,7 @@ import {accordion, createWrapper} from '../src';
  */
 describe(
 	'React Bootstrap Accordion',
-	accordion(({panels, id}) => {
+	accordion(({panels}) => {
 		const props = {};
 		const nestedPanels = panels.map((panel, i) => {
 			const panelProps = {
@@ -30,7 +30,7 @@ describe(
 			);
 		});
 
-		const node = createWrapper(`rgaa-react-bootstrap-accordion-${id}`);
+		const node = createWrapper('rgaa-react-bootstrap-accordion');
 
 		render(
 			createElement(

@@ -1,5 +1,6 @@
 import {findChildByRole, findChildrenByRole} from './dom';
 import describeSome from './describeSome';
+import cleanDom from './cleanDom';
 
 
 
@@ -8,11 +9,6 @@ import describeSome from './describeSome';
  */
 const defaultMakeLabel = ({value}) => `${value}%`;
 
-
-/**
- *
- */
-const resetDocument = () => document.documentElement.innerHTML = '';
 
 
 /**
@@ -44,8 +40,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								content: 'Content 3',
 								selected: false
 							}
-						],
-						id: 'accordion-criteria-1-1'
+						]
 					};
 					this.node = factory(this.props);
 					this.accordion = findChildByRole(this.node, 'tablist');
@@ -79,8 +74,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								content: 'Content 3',
 								selected: false
 							}
-						],
-						id: 'accordion-criteria-1-1'
+						]
 					};
 					this.node = factory(this.props);
 					this.accordion = findChildByRole(this.node, 'tablist');
@@ -123,8 +117,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								content: 'Content 3',
 								selected: false
 							}
-						],
-						id: 'accordion-criteria-1-1'
+						]
 					};
 					this.node = factory(this.props);
 					this.accordion = findChildByRole(this.node, 'tablist');
@@ -133,7 +126,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				});
 
 				after(function() {
-					resetDocument();
+					cleanDom();
 				});
 
 				it('Le panneau possède un role="tabpanel"', function() {
@@ -175,7 +168,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-t-elle ces conditions ?', function() {
 				afterEach(function() {
-					resetDocument();
+					cleanDom();
 				});
 
 				it('De l\'extérieur du composant, lorsque aucun panneau n\'est actif, le focus est donné sur le titre'
@@ -197,8 +190,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 									content: 'Content 3',
 									selected: false
 								}
-							],
-							id: 'accordion-criteria-1-4'
+							]
 						};
 						const node = factory(props);
 						const titles = findChildrenByRole(node, 'tab');
@@ -225,8 +217,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 									content: 'Content 3',
 									selected: false
 								}
-							],
-							id: 'accordion-criteria-1-4'
+							]
 						};
 						const node = factory(props);
 						const input = document.createElement('input');
@@ -258,8 +249,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 									content: 'Content 3',
 									selected: false
 								}
-							],
-							id: 'accordion-criteria-1-4-active'
+							]
 						};
 						const node = factory(props);
 						const titles = findChildrenByRole(node, 'tab');
@@ -288,8 +278,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 									content: 'Content 3',
 									selected: false
 								}
-							],
-							id: 'accordion-criteria-1-4-active'
+							]
 						};
 						const node = factory(props);
 						const accordion = findChildByRole(node, 'tablist');
@@ -333,8 +322,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 									content: 'Content 3',
 									selected: true
 								}
-							],
-							id: 'accordion-criteria-1-4'
+							]
 						};
 						const node = factory(props);
 						const input = document.createElement('input');
@@ -373,8 +361,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 									content: 'Content 3',
 									selected: false
 								}
-							],
-							id: 'accordion-criteria-1-4'
+							]
 						};
 						const node = factory(props);
 						const input = document.createElement('input');
@@ -408,8 +395,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								content: 'Content 3',
 								selected: false
 							}
-						],
-						id: 'accordion-criteria-2-2'
+						]
 					};
 					this.node = factory(this.props);
 					this.accordion = findChildByRole(this.node, 'tablist');
@@ -417,7 +403,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				});
 
 				after(function() {
-					resetDocument();
+					cleanDom();
 				});
 
 				it('À partir du titre d\'un accordéon, [Haut et Gauche] permet d\'atteindre le titre précédent.', function() {
@@ -470,8 +456,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								content: 'Content 3',
 								selected: false
 							}
-						],
-						id: 'accordion-criteria-2-3'
+						]
 					};
 					this.node = factory(this.props);
 					this.accordion = findChildByRole(this.node, 'tablist');
@@ -480,7 +465,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				});
 
 				afterEach(function() {
-					resetDocument();
+					cleanDom();
 				});
 
 				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Espace] permet d\'ouvrir le panneau', function() {
