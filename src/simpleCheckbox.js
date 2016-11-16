@@ -1,5 +1,6 @@
-import {findChildByRole, resetDocument} from './dom';
+import {findChildByRole} from './dom';
 import pending from './pending';
+import cleanDom from './cleanDom';
 
 
 /**
@@ -20,10 +21,13 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 	return function testSimpleCheckbox() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1 : Le composant respecte-t-il ces conditions ?', function() {
+				afterEach(function() {
+					cleanDom();
+				});
+
 				it('Le composant possède un role="checkbox"', function() {
 					const props = {
-						checked: true,
-						id: 'checkbox-role'
+						checked: true
 					};
 
 					let node = factory(props);
@@ -34,8 +38,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 
 				it('Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné', function() {
 					const props = {
-						checked: true,
-						id: 'checkbox-selected'
+						checked: true
 					};
 
 					let node = factory(props);
@@ -46,8 +49,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 
 				it('Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné', function() {
 					const props = {
-						checked: false,
-						id: 'checkbox-not-selected'
+						checked: false
 					};
 
 					let node = factory(props);
@@ -58,8 +60,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 
 				it('Le composant possède l\'attribut tabindex="0", si nécessaire', function() {
 					const props = {
-						checked: true,
-						id: 'checkbox-tabindex'
+						checked: true
 					};
 
 					let node = factory(props);
@@ -72,12 +73,15 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 			describe('Test 1.2 : Chaque état de composant symbolisé par une image respecte-t-il une de ces conditions ?', function() {
 				before(function() {
 					this.props = {
-						checked: true,
-						id: 'image'
+						checked: true
 					};
 					this.node = factory(this.props);
 					this.images = this.node.querySelectorAll('img');
 					this.presentationImages = this.node.querySelectorAll('img[role="presentation"]');
+				});
+
+				after(function() {
+					cleanDom();
 				});
 
 				it('L\'image possède le role="presentation"',	function() {
@@ -95,14 +99,13 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 		})
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : Pour chaque composant, l\'utilisation de la touche [Espace] respecte-t-elle ces conditions ?', function() {
-				after(function() {
-					resetDocument();
+				afterEach(function() {
+					cleanDom();
 				});
 
 				it('[Espace] permet de cocher le composant s\'il n\'est pas coché', function() {
 					const props = {
-						checked: false,
-						id: 'checkbox-not-selected-keyboard'
+						checked: false
 					};
 
 					const node = factory(props);
@@ -117,8 +120,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 
 				it('[Espace] permet de décocher le composant s\'il est coché', function() {
 					const props = {
-						checked: true,
-						id: 'checkbox-selected-keyboard'
+						checked: true
 					};
 
 					const node = factory(props);

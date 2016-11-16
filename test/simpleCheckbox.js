@@ -8,8 +8,8 @@ import {simpleCheckbox, createWrapper} from '../src';
  */
 describe(
 	'WAI-ARIA Simple CheckBox example',
-	simpleCheckbox(({checked, id}) => {
-		const node = createWrapper(`wai-aria-simple-checkbox-${id}`);
+	simpleCheckbox(({checked}) => {
+		const node = createWrapper('wai-aria-simple-checkbox');
 		node.appendChild(SimpleCheckbox(checked));
 		return node;
 	})
