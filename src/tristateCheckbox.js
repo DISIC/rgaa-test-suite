@@ -1,5 +1,6 @@
-import {findChildByRole, resetDocument} from './dom';
+import {findChildByRole} from './dom';
 import pending from './pending';
+import cleanDom from './cleanDom';
 
 
 /**
@@ -31,6 +32,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 	return function testTristateCheckbox() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1 : Le composant respecte-t-il ces conditions ?', function() {
+				afterEach(function() {
+					cleanDom();
+				});
+
 				it('Le composant possède un role="checkbox"',	function() {
 					const props = {
 						state: true,
@@ -40,8 +45,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'tristate-checkbox-role'
+						title: 'Sandwich Condiments'
 					};
 
 					let node = factory(props);
@@ -60,8 +64,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'tristate-checkbox-selected'
+						title: 'Sandwich Condiments'
 					};
 
 					let node = factory(props);
@@ -80,8 +83,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'tristate-checkbox-not-selected'
+						title: 'Sandwich Condiments'
 					};
 
 					let node = factory(props);
@@ -100,8 +102,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'tristate-checkbox-mixed'
+						title: 'Sandwich Condiments'
 					};
 
 					let node = factory(props);
@@ -135,8 +136,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'tristate-checkbox-tabindex'
+						title: 'Sandwich Condiments'
 					};
 
 					let node = factory(props);
@@ -157,12 +157,15 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'image'
+						title: 'Sandwich Condiments'
 					};
 					this.node = factory(this.props);
 					this.images = this.node.querySelectorAll('img');
 					this.presentationImages = this.node.querySelectorAll('img[role="presentation"]');
+				});
+
+				after(function() {
+					cleanDom();
 				});
 
 				it('L\'image possède le role="presentation"',	function() {
@@ -179,8 +182,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 
 
 			describe('Test 1.3 : Chaque groupement de cases à cocher respecte-t-il ces conditions ?', function() {
-				it('L\'élément structurant le groupe possède un role="group"', function() {
-					const props = {
+				beforeEach(function() {
+					this.props = {
 						state: true,
 						items: [
 							{label: 'Lettuce'},
@@ -188,30 +191,40 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							{label: 'Mustard'},
 							{label: 'Sprouts'}
 						],
-						title: 'Sandwich Condiments',
-						id: 'tristate-checkbox-group'
+						title: 'Sandwich Condiments'
 					};
 
-					const node = factory(props);
-					expect(node.querySelectorAll('[role=group]').length > 0).to.be.true;
+					this.node = factory(this.props);
+					this.structuringNode = this.node.querySelectorAll('[role=group]')[0];
 				});
 
-				it.skip('L\'élément structurant est précédé d\'un titre',
+				afterEach(function() {
+					cleanDom();
+				});
+
+				it('L\'élément structurant le groupe possède un role="group"', function() {
+					expect(this.structuringNode).to.exist;
+				});
+
+				it.only('L\'élément structurant est précédé d\'un titre',
 					function() {
-						// Don't know what it means !!!!
-						// See grid
+						expect(this.structuringNode.previousSibling.nodeName)
+							.to.be.oneOf(['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P']);
 					}
 				);
 
-				it.skip('L\'élément structurant possède une propriété aria-labelledby="[ID_titre]" référençant le titre',
+				it('L\'élément structurant possède une propriété aria-labelledby="[ID_titre]" référençant le titre',
 					function() {
-						// Don't know what it means !!!!
-						// See grid
+						expect(this.structuringNode.getAttribute('aria-labelledby')).to.exist;
 					}
 				);
 			});
 
 			describe('Test 1.4 : Chaque case à cocher qui supporte un triple état et qui représente l\'état d\'un groupe de cases à cocher, respecte-t-elle ces conditions ?', function() {
+				afterEach(function() {
+					cleanDom();
+				});
+
 				it('L\'élément possède une propriété aria-checked="false" lorsqu\'aucune case à cocher du groupe n\'est cochée',
 					function(done) {
 						const props = {
@@ -222,8 +235,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 								{label: 'Mustard'},
 								{label: 'Sprouts'}
 							],
-							title: 'Sandwich Condiments',
-							id: 'checkboxes-not-selected'
+							title: 'Sandwich Condiments'
 						};
 
 						const node = factory(props);
@@ -260,8 +272,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 								{label: 'Mustard'},
 								{label: 'Sprouts'}
 							],
-							title: 'Sandwich Condiments',
-							id: 'one-checkboxe-selected'
+							title: 'Sandwich Condiments'
 						};
 
 						const node = factory(props);
@@ -292,8 +303,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 								{label: 'Mustard'},
 								{label: 'Sprouts'}
 							],
-							title: 'Sandwich Condiments',
-							id: 'checkboxes-selected'
+							title: 'Sandwich Condiments'
 						};
 
 						const node = factory(props);
@@ -324,6 +334,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : Pour chaque composant, l\'utilisation de la touche [Espace] respecte-t-elle ces conditions ?', function() {
+				afterEach(function() {
+					cleanDom();
+				});
+
 				it('[Espace] permet de cocher le composant s\'il n\'est pas coché',
 					function() {
 						const props = {
@@ -334,8 +348,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 								{label: 'Mustard'},
 								{label: 'Sprouts'}
 							],
-							title: 'Sandwich Condiments',
-							id: 'tristate-checkbox-not-selected-keyboard'
+							title: 'Sandwich Condiments'
 						};
 
 						const node = factory(props);
@@ -360,8 +373,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 								{label: 'Mustard'},
 								{label: 'Sprouts'}
 							],
-							title: 'Sandwich Condiments',
-							id: 'tristate-checkbox-selected-keyboard'
+							title: 'Sandwich Condiments'
 						};
 
 						const node = factory(props);
@@ -378,8 +390,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 			});
 
 			describe('Test 2.2 :  Pour chaque composant qui supporte un triple état, l\'utilisation de la touche [Espace] respecte-t-elle cette condition ?', function() {
-				after(function() {
-					resetDocument();
+				afterEach(function() {
+					cleanDom();
 				});
 
 				it('Si le composant est partiellement coché, [Espace] permet de cocher le composant',
@@ -392,8 +404,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 								{label: 'Mustard'},
 								{label: 'Sprouts'}
 							],
-							title: 'Sandwich Condiments',
-							id: 'tristate-checkbox-mixed-keyboard'
+							title: 'Sandwich Condiments'
 						};
 
 						const node = factory(props);
