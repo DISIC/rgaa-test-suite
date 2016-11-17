@@ -182,7 +182,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 				});
 
 				it('L\'élément structurant le groupe possède un role="group"', function() {
-					expect(this.structuringNode).to.exist;
+					expect(this.structuringNode.getAttribute('role')).to.equal('group');
 				});
 
 				it('L\'élément structurant est précédé d\'un titre',
