@@ -66,7 +66,8 @@ Chaque test requiert des options particulières pour initialiser les composants.
 Vous trouverez ci-dessous la liste de ces options :
 
 * [Accordion](#accordion)
-* [Checkbox](#checkbox)
+* [Simple Checkbox](#simple-checkbox)
+* [Tristate Checkbox](#tristate-checkbox)
 * [Dialog](#dialog)
 * [ProgressBar](#progressbar)
 * [RadioButton](#radiobutton)
@@ -93,8 +94,8 @@ Options :
 
 [Exemple](./test/accordion.js)
 
-#### Checkbox
 
+#### Simple Checkbox
 Options :
 
 ```js
@@ -104,6 +105,36 @@ Options :
 ```
 
 [Exemple](./test/checkbox.js)
+
+#### Tristate Checkbox
+Options :
+
+```js
+{
+  state: 'mixed', // {string} si la checkbox est partiellement cochée
+  items: [
+    {
+        label: 'Lettuce', // {string} le label de la checkbox
+        checked: true // {bool} si la checkbox est cochée
+    },
+    {
+        label: 'Tomato',
+        checked: false
+    },
+    {
+        label: 'Mustard',
+        checked: false
+    },
+    {
+        label: 'Sprouts',
+        checked: false
+    }
+  ],
+  title: 'Sandwich Condiments' // {string} Titre du groupement de checkbox
+}
+```
+
+[Exemple](./test/tristateCheckbox.js)
 
 #### Dialog
 
@@ -123,7 +154,7 @@ Ceci est dû à la manière dont sont couramment implémentées les modales, qui
 
 #### ProgressBar
 
-Options : 
+Options :
 
 ```js
 {
