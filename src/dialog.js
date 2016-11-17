@@ -80,25 +80,25 @@ export default function createDialogTest(factory) {
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-elle ces conditions ?', function() {
 				it('La tabulation permet d\'atteindre l\'élément suivant et précédent du composant', function() {
-					focus(this.focusables[0]);
+					effroi.keyboard.focus(this.focusables[0]);
 
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement)
 						.to.equal(this.focusables[1]);
 
-					shiftTab();
+					effroi.keyboard.shiftTab();
 					expect(document.activeElement)
 						.to.equal(this.focusables[0]);
 				});
 
 				it('La tabulation est restreinte aux éléments focusables du composant', function() {
-					focus(this.focusables[0]);
+					effroi.keyboard.focus(this.focusables[0]);
 
-					shiftTab();
+					effroi.keyboard.shiftTab();
 					expect(document.activeElement)
 						.to.equal(this.focusables[this.focusables.length - 1]);
 
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement)
 						.to.equal(this.focusables[0]);
 				});
