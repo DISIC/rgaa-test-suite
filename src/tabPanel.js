@@ -1,5 +1,4 @@
 import {findChildByRole, findChildrenByRole} from './dom';
-import {tab, shiftTab} from './keyboard';
 import describeSome from './describeSome';
 
 
@@ -128,7 +127,7 @@ export default (factory) => () =>
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-t-elle ces conditions ?', function() {
 				it('De l\'extérieur du composant, le focus est donné sur le titre du panneau actif', function() {
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement)
 						.to.equal(this.selectedTab);
 				});
@@ -136,15 +135,15 @@ export default (factory) => () =>
 				it('La tabulation permet d\'atteindre l\'élément suivant ou précédent du panneau actif', function() {
 					effroi.keyboard.focus(this.selectedTab);
 
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement)
 						.to.equal(this.button1);
 
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement)
 						.to.equal(this.button2);
 
-					shiftTab();
+					effroi.keyboard.shiftTab();
 					expect(document.activeElement)
 						.to.equal(this.button1);
 				});
@@ -152,7 +151,7 @@ export default (factory) => () =>
 				it('Lorsque le dernier élément focusable du composant est atteint, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant', function() {
 					effroi.keyboard.focus(this.button2);
 
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement)
 						.to.equal(this.focusableAfter);
 				});
@@ -160,7 +159,7 @@ export default (factory) => () =>
 				it('Lorsque le premier élément focusable du composant est atteint, le focus est donné sur l\'élément focusable précédent à l\'extérieur du composant', function() {
 					effroi.keyboard.focus(this.selectedTab);
 
-					shiftTab();
+					effroi.keyboard.shiftTab();
 					expect(document.activeElement)
 						.to.equal(this.focusableBefore);
 				});
