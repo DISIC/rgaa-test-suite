@@ -1,7 +1,6 @@
 import tabbable from 'tabbable';
 import cleanDom from './cleanDom';
 import describeSome from './describeSome';
-import {focus, tab, shiftTab} from './keyboard';
 
 
 const isDialogOpened = (dialog) =>
