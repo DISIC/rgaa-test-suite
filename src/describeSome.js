@@ -5,7 +5,7 @@
  *	@param {string} title - Title.
  *	@param {function} suite - Suite.
  */
-export default (title, suite) =>
+export default function describeSome(title, suite) {
 	describe(title, function() {
 		let success = false;
 
@@ -19,7 +19,7 @@ export default (title, suite) =>
 
 			test.fn = function() {
 				try {
-					fn();
+					fn.call(this);
 					success = true;
 				} catch (e) {
 					// Failing tests are skipped, so if there are
@@ -37,3 +37,10 @@ export default (title, suite) =>
 			}
 		});
 	});
+};
+
+/**
+ *	Proxies describe() helpers.
+ */
+describeSome.skip = describe.skip;
+describeSome.only = describe.only;

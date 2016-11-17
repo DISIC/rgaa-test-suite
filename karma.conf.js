@@ -11,6 +11,9 @@ module.exports = function(config) {
 		files: [
 			{pattern: require.resolve('jquery/dist/jquery'), watched: false},
 			{pattern: require.resolve('jquery-nstslider/dist/jquery.nstSlider'), watched: false},
+			{pattern: require.resolve('jquery-ui-dist/jquery-ui'), watched: false},
+			{pattern: require.resolve('rgaa_jquery-ui/dist/rgaa_jquery-ui'), watched: false},
+			//include effroi library - no need for a karma plugin
 			{pattern: require.resolve('effroi'), watched: false},
 			'test/*.js'
 		],

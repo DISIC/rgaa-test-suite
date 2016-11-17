@@ -19,6 +19,7 @@
     "effroi": "github:v-technologies/effroi",
     "jquery": "^3.1.1",
     "jquery-nstslider": "^1.0.4",
+    "jquery-ui-dist": "^1.12.1",
     "karma": "^0.13.22",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.3",
@@ -29,6 +30,7 @@
     "mocha": "^2.4.5",
     "react": "^0.13.3",
     "react-bootstrap": "^0.19.1",
+    "rgaa_jquery-ui": "^1.0.1",
     "rgaa_react-bootstrap": "^1.0.0",
     "webpack": "^1.13.0"
   },
