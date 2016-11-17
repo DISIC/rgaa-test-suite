@@ -14,12 +14,6 @@ const defaultMakeLabel = ({value}) => `${value}%`;
  */
 const getChildrenCheckboxes = (node) => node.querySelectorAll('input[type=checkbox], [role=checkbox]');
 
-/**
- *
- */
-const isInputCheckbox = (node) => node.getAttribute('type', 'checkbox') !== undefined;
-
-
 
 /**
  *	Returns a function that tests a tristate checkbox component.
@@ -38,12 +32,12 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 
 				it('Le composant possède un role="checkbox"',	function() {
 					const props = {
-						state: true,
+						state: false,
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: false},
+							{label: 'Tomato', checked: false},
+							{label: 'Mustard', checked: false},
+							{label: 'Sprouts', checked: false}
 						],
 						title: 'Sandwich Condiments'
 					};
@@ -59,10 +53,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					const props = {
 						state: true,
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: true},
+							{label: 'Tomato', checked: true},
+							{label: 'Mustard', checked: true},
+							{label: 'Sprouts', checked: true}
 						],
 						title: 'Sandwich Condiments'
 					};
@@ -78,13 +72,13 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					const props = {
 						state: false,
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: false},
+							{label: 'Tomato', checked: false},
+							{label: 'Mustard', checked: false},
+							{label: 'Sprouts', checked: false}
 						],
 						title: 'Sandwich Condiments'
-					};
+					}
 
 					let node = factory(props);
 					let checkboxes = getChildrenCheckboxes(node);
@@ -93,14 +87,14 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 				});
 
-				it('Le composant possède la propriété aria-checked="mixed" lorsqu\'il est partiellement sélectionné',	function(done) {
+				it('Le composant possède la propriété aria-checked="mixed" lorsqu\'il est partiellement sélectionné',	function() {
 					const props = {
-						state: false,
+						state: 'mixed',
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: true},
+							{label: 'Tomato', checked: false},
+							{label: 'Mustard', checked: false},
+							{label: 'Sprouts', checked: false}
 						],
 						title: 'Sandwich Condiments'
 					};
@@ -109,32 +103,17 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					let checkboxes = getChildrenCheckboxes(node);
 					let mainCheckbox = checkboxes[0];
 
-					const firstNestedCheckbox = checkboxes[1];
-					// Handles inputs and aria checkboxes
-					if (isInputCheckbox(firstNestedCheckbox)) {
-						firstNestedCheckbox.checked = true;
-					} else {
-						firstNestedCheckbox['aria-checked'] = true;
-					}
-
-					// Simulates change event
-					const e = new Event('change');
-					firstNestedCheckbox.dispatchEvent(e);
-
-					setTimeout(() => {
-						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
-						done();
-					}, 200);
+					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 				});
 
 				it('Le composant possède l\'attribut tabindex="0", si nécessaire', function() {
 					const props = {
-						state: true,
+						state: false,
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: false},
+							{label: 'Tomato', checked: false},
+							{label: 'Mustard', checked: false},
+							{label: 'Sprouts', checked: false}
 						],
 						title: 'Sandwich Condiments'
 					};
@@ -150,12 +129,12 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 			describe('Test 1.2 : Chaque état de composant symbolisé par une image respecte-t-il une de ces conditions ?', function() {
 				before(function() {
 					this.props = {
-						state: true,
+						state: false,
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: false},
+							{label: 'Tomato', checked: false},
+							{label: 'Mustard', checked: false},
+							{label: 'Sprouts', checked: false}
 						],
 						title: 'Sandwich Condiments'
 					};
@@ -184,12 +163,12 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 			describe('Test 1.3 : Chaque groupement de cases à cocher respecte-t-il ces conditions ?', function() {
 				beforeEach(function() {
 					this.props = {
-						state: true,
+						state: false,
 						items: [
-							{label: 'Lettuce'},
-							{label: 'Tomato'},
-							{label: 'Mustard'},
-							{label: 'Sprouts'}
+							{label: 'Lettuce', checked: false},
+							{label: 'Tomato', checked: false},
+							{label: 'Mustard', checked: false},
+							{label: 'Sprouts', checked: false}
 						],
 						title: 'Sandwich Condiments'
 					};
@@ -206,7 +185,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					expect(this.structuringNode).to.exist;
 				});
 
-				it.only('L\'élément structurant est précédé d\'un titre',
+				it('L\'élément structurant est précédé d\'un titre',
 					function() {
 						expect(this.structuringNode.previousSibling.nodeName)
 							.to.be.oneOf(['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P']);
@@ -226,14 +205,14 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 				});
 
 				it('L\'élément possède une propriété aria-checked="false" lorsqu\'aucune case à cocher du groupe n\'est cochée',
-					function(done) {
+					function() {
 						const props = {
-							state: true,
+							state: 'mixed',
 							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
+								{label: 'Lettuce', checked: true},
+								{label: 'Tomato', checked: false},
+								{label: 'Mustard', checked: false},
+								{label: 'Sprouts', checked: false}
 							],
 							title: 'Sandwich Condiments'
 						};
@@ -241,36 +220,22 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const node = factory(props);
 						const checkboxes = getChildrenCheckboxes(node);
 						const mainCheckbox = checkboxes[0];
+						const firstNestedCheckbox = checkboxes[1];
 
-						// Uncheck all nested checkboxes
-						for (let i = 1; i < checkboxes.length; i++) {
-							if (isInputCheckbox(checkboxes[i])) {
-								checkboxes[i].checked = false;
-							} else {
-								checkboxes[i]['aria-checked'] = false;
-							}
-						}
-
-						const e = new Event('change');
-						checkboxes[checkboxes.length - 1].dispatchEvent(e);
-
-
-						setTimeout(() => {
-							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
-							done();
-						}, 200);
+						effroi.mouse.click(firstNestedCheckbox);
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 					}
 				);
 
 				it('L\'élément possède une propriété aria-checked="mixed", lorsqu\'au moins une case à cocher du groupe est cochée',
-					function(done) {
+					function() {
 						const props = {
 							state: false,
 							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
+								{label: 'Lettuce', checked: false},
+								{label: 'Tomato', checked: false},
+								{label: 'Mustard', checked: false},
+								{label: 'Sprouts', checked: false}
 							],
 							title: 'Sandwich Condiments'
 						};
@@ -278,30 +243,22 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const node = factory(props);
 						const checkboxes = getChildrenCheckboxes(node);
 						const mainCheckbox = checkboxes[0];
+						const firstNestedCheckbox = checkboxes[1];
 
-						// Check first nested checkbox
-						checkboxes[1].checked = true;
-
-						const e = new Event('change');
-						checkboxes[1].dispatchEvent(e);
-
-
-						setTimeout(() => {
-							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
-							done();
-						}, 200);
+						effroi.mouse.click(firstNestedCheckbox);
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 					}
 				);
 
 				it('L\'élément possède une propriété aria-checked="true", lorsque toutes les cases à cocher du groupe sont cochées',
-					function(done) {
+					function() {
 						const props = {
-							state: false,
+							state: 'mixed',
 							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
+								{label: 'Lettuce', checked: false},
+								{label: 'Tomato', checked: true},
+								{label: 'Mustard', checked: true},
+								{label: 'Sprouts', checked: true}
 							],
 							title: 'Sandwich Condiments'
 						};
@@ -309,24 +266,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const node = factory(props);
 						const checkboxes = getChildrenCheckboxes(node);
 						const mainCheckbox = checkboxes[0];
+						const firstNestedCheckbox = checkboxes[1];
 
-						// Check all nested checkboxes
-						for (let i = 1; i < checkboxes.length; i++) {
-							if (isInputCheckbox(checkboxes[i])) {
-								checkboxes[i].checked = true;
-							} else {
-								checkboxes[i]['aria-checked'] = true;
-							}
-						}
-
-						const e = new Event('change');
-						checkboxes[checkboxes.length - 1].dispatchEvent(e);
-
-
-						setTimeout(() => {
-							expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
-							done();
-						}, 200);
+						effroi.mouse.click(firstNestedCheckbox);
+						expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 					}
 				);
 			});
@@ -343,10 +286,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const props = {
 							state: false,
 							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
+								{label: 'Lettuce', checked: false},
+								{label: 'Tomato', checked: false},
+								{label: 'Mustard', checked: false},
+								{label: 'Sprouts', checked: false}
 							],
 							title: 'Sandwich Condiments'
 						};
@@ -368,10 +311,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const props = {
 							state: true,
 							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
+								{label: 'Lettuce', checked: true},
+								{label: 'Tomato', checked: true},
+								{label: 'Mustard', checked: true},
+								{label: 'Sprouts', checked: true}
 							],
 							title: 'Sandwich Condiments'
 						};
@@ -399,10 +342,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						const props = {
 							state: 'mixed',
 							items: [
-								{label: 'Lettuce'},
-								{label: 'Tomato'},
-								{label: 'Mustard'},
-								{label: 'Sprouts'}
+								{label: 'Lettuce', checked: false},
+								{label: 'Tomato', checked: true},
+								{label: 'Mustard', checked: true},
+								{label: 'Sprouts', checked: true}
 							],
 							title: 'Sandwich Condiments'
 						};

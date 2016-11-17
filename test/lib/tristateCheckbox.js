@@ -34,6 +34,7 @@ export default function tristateCheckbox(title, state, items) {
 		const checkboxLabel = document.createElement('label');
 		const checkbox = document.createElement('input');
 		checkbox.setAttribute('type', 'checkbox');
+		checkbox.checked = item.checked;
 		checkbox.addEventListener('change', updateGroupCheckbox);
 		checkbox.addEventListener('focus', focusStandardCheckbox);
 		checkbox.addEventListener('blur', blurStandardCheckbox);
