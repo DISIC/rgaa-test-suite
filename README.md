@@ -16,7 +16,7 @@ Cette suite de tests permet d'automatiser la plupart des tests nécessaires à s
 
 ## Installation
 
-Ces tests sont écrits en JavaScript avec la bibliothèque de test [mocha](https://github.com/mochajs/mocha).
+Ces tests sont écrits en JavaScript avec la bibliothèque de test [mocha](https://github.com/mochajs/mocha).  
 Installez la suite de tests en tant que dépendance de votre projet lors de vos développements via [npm](https://www.npmjs.com/get-npm) :
 
 ```sh
@@ -38,10 +38,10 @@ Ce fonctionnement permet à la suite de tests de rester générique, et de fonct
 
 ### Exemple
 
-Voici comment on pourrait tester une barre de progression, [dans un environnement ES6](https://developer.mozilla.org/fr/docs/Web/JavaScript/Nouveaut%C3%A9s_et_historique_de_JavaScript/Support_ECMAScript_6_par_Mozilla) :
+Dans le projet de test [template](./template), vous pourriez remplir le fichier `test/index.js` avec ça pour tester une barre de progression :
 
 ```js
-import {progressBar} from 'rgaa-test-suite';
+var testSuite = require('rgaa-test-suite');
 
 /**
  * Une factory prenant en paramètre les options nécessaires
@@ -50,7 +50,7 @@ import {progressBar} from 'rgaa-test-suite';
  * le composant à tester.
  */
 function progressBarFactory(options) {
-  const node = document.createElement('div');
+  var node = document.createElement('div');
   node.setAttribute('aria-valuemin', options.min);
   node.setAttribute('aria-valuemax', options.max);
   node.setAttribute('aria-value', options.value);
@@ -61,7 +61,7 @@ function progressBarFactory(options) {
 /**
  * Mise en place du test mocha.
  */
-describe('Ma super barre de progression', progressBar(progressBarFactory));
+describe('Ma super barre de progression', testSuite.progressBar(progressBarFactory));
 ```
 
 Au lancement de mocha, `progressBar()` exécutera tous les tests du motif de conception :
