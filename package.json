@@ -4,13 +4,15 @@
   "description": "A test suite to test JavaScript components for RGAA3 compliancy.",
   "author": "Félix Girault <felix.girault@gmail.com>",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "npm run test -- --watch",
+    "build": "babel --out-dir ./lib ./src",
     "test": "karma start"
   },
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.6.0",
