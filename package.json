@@ -13,6 +13,12 @@
     "build": "babel --out-dir ./lib ./src",
     "test": "karma start"
   },
+  "dependencies": {
+    "tabbable": "^1.0.4"
+  },
+  "peerDependencies": {
+    "mocha": "^2.0.0"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
@@ -39,8 +45,5 @@
     "rgaa_react-bootstrap": "^1.0.0",
     "rheostat": "^2.1.0",
     "webpack": "^1.13.0"
-  },
-  "dependencies": {
-    "tabbable": "^1.0.4"
   }
 }
