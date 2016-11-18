@@ -8,7 +8,7 @@ import {press, focus, tab} from './keyboard';
  */
 export default function createSliderText(factory) {
 	return function testSlider() {
-		before(function() {
+		beforeEach(function() {
 			this.props = {
 				id: 'clean',
 				min: -10,
@@ -24,19 +24,6 @@ export default function createSliderText(factory) {
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1: Le composant respecte-t-il ces conditions ?', function() {
-				before(function() {
-					this.labelledNode = factory({
-						...this.props,
-						id: 'withLabel',
-						withLabel: true
-					});
-					this.verticalNode = factory({
-						...this.props,
-						id: 'vertical',
-						isVertical: true
-					});
-				});
-
 				it('Le composant possède un role="slider"', function() {
 					expect(this.slider).to.exist;
 				});
@@ -54,8 +41,18 @@ export default function createSliderText(factory) {
 				});
 
 				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + text]"', function() {
+					before(function() {
+						this.labelledNode = factory({
+							...this.props,
+							id: 'withLabel',
+							withLabel: true
+						});
+					});
 					const slider = this.labelledNode.querySelector('[role="slider"]');
 					expect(slider.getAttribute('aria-valuetext')).to.be.ok;
+					after(function() {
+						this.labelledNode.remove();
+					});
 				});
 
 				it('Lorsque le composant est déplacé, la propriété aria-valuenow est mise à jour', function() {
@@ -68,17 +65,22 @@ export default function createSliderText(factory) {
 
 				it('Lorsque le composant est présenté verticalement, il doit posséder une propriété'
 					+ ' aria-orientation="vertical", cette règle est-elle respectée ?', function() {
+					before(function() {
+						this.verticalNode = factory({
+							...this.props,
+							id: 'vertical',
+							isVertical: true
+						});
+					});
 					const slider = this.verticalNode.querySelector('[role="slider"]');
 					expect(slider.getAttribute('aria-orientation')).to.equal('vertical');
-				});
-
-				after(function() {
-					this.labelledNode.remove();
-					this.verticalNode.remove();
+					after(function() {
+						this.verticalNode.remove();
+					});
 				});
 			});
 
-			describe('Test 1.2: Le composant respecte-t-il ces conditions ?', function() {
+			describe('Test 1.2: Le composant respecte-t-il une de ces conditions ?', function() {
 				it('Le composant possède une propriété aria-labelledby="[ID_titre]"'
 					+ ' référençant un passage de texte faisant office de titre', function() {
 					expect(this.slider.getAttribute('aria-labelledby')).to.be.ok;
@@ -92,10 +94,9 @@ export default function createSliderText(factory) {
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-t-elle ces conditions ?', function() {
-				before(function() {
+				beforeEach(function() {
 					this.dummyInput = $('<input type="text" class="slider-dummy" name="dummy" />').appendTo('body').get(0);
-					$('<input type="text" class="slider-dummy" name="dummy2" />').appendTo('body');
-				})
+				});
 
 				it('De l\'extérieur du composant, le focus est donné sur le composant', function() {
 					tab();
@@ -107,14 +108,14 @@ export default function createSliderText(factory) {
 					expect(document.activeElement).to.equal(this.dummyInput);
 				});
 
-				after(function() {
+				afterEach(function() {
 					$('.slider-dummy').remove();
 				});
 			});
 
 			describe('Test 2.2 :  L\'utilisation des [TOUCHES DE DIRECTION] respecte-t-elle ces conditions ?', function() {
-				before(function() {
 					focus(this.slider);
+				beforeEach(function() {
 					this.initialValue = this.slider.getAttribute('aria-valuenow');
 				});
 
@@ -145,7 +146,7 @@ export default function createSliderText(factory) {
 			});
 		});
 
-		after(function() {
+		afterEach(function() {
 			this.node.remove();
 		})
 	};
