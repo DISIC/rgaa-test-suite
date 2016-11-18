@@ -1,5 +1,6 @@
 import {random} from 'lodash';
 import {findChildByRole} from './dom';
+import pending from './pending';
 import describeSome from './describeSome';
 
 
@@ -99,8 +100,13 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 						.to.equal(makeLabel(this.props));
 				});
 
-				it('La valeur de la propriété aria-valuenow est mise à jour selon la progression.');
-				it('La valeur de la propriété aria-valuetext est mise à jour selon la progression.');
+				it('La valeur de la propriété aria-valuenow est mise à jour selon la progression.', function() {
+					return pending(this, '  Test à implémenter.');
+				});
+
+				it('La valeur de la propriété aria-valuetext est mise à jour selon la progression.', function() {
+					return pending(this, '  Test à implémenter.');
+				});
 			});
 
 			describe('Test 1.4 : Chaque progression, dont la valeur courante est inconnue respecte-t-elle ces conditions ?', function() {
@@ -127,8 +133,12 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 			});
 
 			describe('Test 1.5 : Chaque progression qui concerne une région spécifique d\'un document respecte-t-elle ces conditions ?', function() {
-				it('La région concernée possède une propriété aria-describedby="[ID_composant]".');
-				it('La région concernée possède une propriété aria-busy="true" durant toute la durée de la progression.');
+				it('La région concernée possède une propriété aria-describedby="[ID_composant]".', function() {
+					return pending(this, '  Non testable automatiquement.');
+				});
+				it('La région concernée possède une propriété aria-busy="true" durant toute la durée de la progression.', function() {
+					return pending(this, '  Non testable automatiquement.');
+				});
 			});
 		});
 	});
