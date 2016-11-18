@@ -1,5 +1,5 @@
 import pending from './pending';
-import {press, focus, tab} from './keyboard';
+import describeSome from './describeSome';
 
 
 
@@ -80,7 +80,7 @@ export default function createSliderText(factory) {
 				});
 			});
 
-			describe('Test 1.2: Le composant respecte-t-il une de ces conditions ?', function() {
+			describeSome('Test 1.2: Le composant respecte-t-il une de ces conditions ?', function() {
 				it('Le composant possède une propriété aria-labelledby="[ID_titre]"'
 					+ ' référençant un passage de texte faisant office de titre.', function() {
 					expect(this.slider.getAttribute('aria-labelledby')).to.be.ok;
