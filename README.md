@@ -10,6 +10,8 @@ npm install --save-dev rgaa-test-suite
 
 Les tests nécessitant un DOM, vous devriez également utiliser un lanceur de tests comme [karma](https://github.com/karma-runner/karma) ou un DOM virtuel comme [jsdom](https://github.com/tmpvar/jsdom).
 
+Pour démarrer, vous pouvez vous inspirer du dossier [template](./template), qui contient une structure de projet pour lancer des tests avec mocha et karma.
+
 ## Usage
 
 Les composants devant être initialisés d'une certaine manière pour chaque test, un peu de code est nécessaire pour les mettre en place.
