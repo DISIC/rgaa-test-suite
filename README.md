@@ -193,7 +193,8 @@ Options :
   // liste de boutons
   items: [
     {
-      text: 'Premier bouton' // {string} texte du bouton
+      text: 'Premier bouton', // {string} texte du bouton
+      checked: false // {bool} si le bouton radio est coché
     }
     // ...
   ]
