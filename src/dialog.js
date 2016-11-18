@@ -61,14 +61,14 @@ export default function createDialogTest(factory) {
 			});
 
 			describe('Test 1.3 : À l\'ouverture de la fenêtre, le focus est donné sur le premier élément focusable ?', function() {
-				it('Cette règle est-elle respectée ?', function() {
+				it('Cette condition est respectée.', function() {
 					expect(document.activeElement)
 						.to.equal(this.focusables[0]);
 				});
 			});
 
 			describe('Test 1.4 : À la fermeture de la fenêtre, le focus est donné sur l\'élément ayant permis d\'ouvrir la fenêtre, cette règle est-elle respectée ?', function() {
-				it('Cette règle est-elle respectée ?', function() {
+				it('Cette condition est respectée.', function() {
 					this.close();
 					expect(document.activeElement)
 						.to.equal(this.beforeOpenFocusedElement);
@@ -104,7 +104,7 @@ export default function createDialogTest(factory) {
 			});
 
 			describe('Test 2.2 :  L\'utilisation de la touche [ESC] permet-t-elle de fermer la fenêtre ?', function() {
-				it('Cette règle est-elle respectée ?', function() {
+				it('Cette condition est respectée.', function() {
 					effroi.keyboard.hit('Esc');
 
 					expect(this.cleanContainer)
