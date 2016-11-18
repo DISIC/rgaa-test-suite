@@ -7,8 +7,8 @@ import {dialog as dialogTest, createWrapper} from '../src';
 /**
  *
  */
-describe.only(
-	'JQuery Dialog test',
+describe(
+	'jQuery Dialog test',
 	dialogTest(({title, content}) => {
 		const $dialog = $(`
 			<div id="dialog" title="${title}">
