@@ -1,4 +1,6 @@
 import {slider, createWrapper} from '../src';
+import {render, createElement} from 'react';
+import Rheostat from 'rheostat';
 
 
 
@@ -6,7 +8,7 @@ import {slider, createWrapper} from '../src';
  *
  */
 describe(
-	'jQuery nstSlider Slider',
+	'jQuery nstSlider',
 	slider(({id, min, max, current, withLabel, isVertical}) => {
 		const node = createWrapper(`jquery-nstslider-${id}`);
 
@@ -34,6 +36,28 @@ describe(
 				$(node).find('.label').text(leftValue);
 			}
 		});
+		return node;
+	}
+));
+
+/**
+ *
+ */
+describe(
+	'Rheostat',
+	slider(({id, min, max, current, withLabel, isVertical}) => {
+		const props = {
+			max,
+			min,
+			values: [current]
+		};
+
+		const node = createWrapper(
+			'rgaa-react-bootstrap-progress-bar'
+		);
+
+		render(createElement(Rheostat, props), node);
+
 		return node;
 	}
 ));

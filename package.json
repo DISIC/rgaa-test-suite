@@ -32,6 +32,7 @@
     "react-bootstrap": "^0.19.1",
     "rgaa_jquery-ui": "^1.0.1",
     "rgaa_react-bootstrap": "^1.0.0",
+    "rheostat": "^2.1.0",
     "webpack": "^1.13.0"
   },
   "dependencies": {
