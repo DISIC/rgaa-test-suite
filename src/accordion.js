@@ -282,21 +282,24 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 						};
 						const node = factory(props);
 						const accordion = findChildByRole(node, 'tablist');
+						const titles = findChildrenByRole(node, 'tab');
 						const tabPanels = findChildrenByRole(accordion, 'tabpanel');
 
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
 
 						tabPanels[0].appendChild(input.cloneNode(true));
-						tabPanels[0].appendChild(input.cloneNode(true));
 						tabPanels[1].appendChild(input.cloneNode(true));
 
 						const firstTabPanelChildren = tabPanels[0].querySelectorAll('input[type="text"]');
 						const secondTabPanelChildren = tabPanels[1].querySelectorAll('input[type=text]');
 
-						effroi.keyboard.focus(firstTabPanelChildren[0]);
+						effroi.keyboard.focus(titles[0]);
 						effroi.keyboard.tab();
-						expect(document.activeElement).to.equal(firstTabPanelChildren[1]);
+						expect(document.activeElement).to.equal(firstTabPanelChildren[0]);
+
+						effroi.keyboard.tab();
+						expect(document.activeElement).to.equal(titles[1]);
 
 						effroi.keyboard.tab();
 						expect(document.activeElement).to.equal(secondTabPanelChildren[0]);
@@ -482,7 +485,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Entrée] permet d\'ouvrir le panneau', function() {
 					// Focus on first panel
 					this.titles[0].focus();
-					effroi.keyboard.hit('Enter');
+					effroi.keyboard.enter();
 
 					expect(this.tabPanels[0].getAttribute('aria-expanded'))
 						.to.equal('true');
