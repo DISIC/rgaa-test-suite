@@ -2,8 +2,11 @@
   "name": "rgaa-test-suite",
   "version": "1.0.0",
   "description": "A test suite to test JavaScript components for RGAA3 compliancy.",
-  "author": "Félix Girault <felix.girault@gmail.com>",
-  "license": "MIT",
+  "contributors": [
+    "Clément Cousein <clement@vtech.fr>",
+    "Félix Girault <felix@vtech.fr>",
+    "Emmanuel Pelletier <e.pelletier@vtech.fr>"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "start": "npm run test -- --watch",
