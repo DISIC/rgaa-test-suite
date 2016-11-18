@@ -24,23 +24,23 @@ export default function createSliderText(factory) {
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1: Le composant respecte-t-il ces conditions ?', function() {
-				it('Le composant possède un role="slider"', function() {
+				it('Le composant possède un role="slider".', function() {
 					expect(this.slider).to.exist;
 				});
 
-				it('Le composant possède une propriété aria-valuenow="[valeur courante]"', function() {
+				it('Le composant possède une propriété aria-valuenow="[valeur courante]".', function() {
 					expect(this.slider.getAttribute('aria-valuenow')).to.equal(`${this.props.current}`);
 				});
 
-				it('Le composant possède une propriété aria-valuemax="[valeur maximale]"', function() {
+				it('Le composant possède une propriété aria-valuemax="[valeur maximale]".', function() {
 					expect(this.slider.getAttribute('aria-valuemax')).to.equal(`${this.props.max}`);
 				});
 
-				it('Le composant possède une propriété aria-valuemin="[valeur minimum]"', function() {
+				it('Le composant possède une propriété aria-valuemin="[valeur minimum]".', function() {
 					expect(this.slider.getAttribute('aria-valuemin')).to.equal(`${this.props.min}`);
 				});
 
-				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + text]"', function() {
+				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + text]".', function() {
 					before(function() {
 						this.labelledNode = factory({
 							...this.props,
@@ -55,12 +55,12 @@ export default function createSliderText(factory) {
 					});
 				});
 
-				it('Lorsque le composant est déplacé, la propriété aria-valuenow est mise à jour', function() {
-					return pending(this, 'À tester manuellement avec la souris');
+				it('Lorsque le composant est déplacé, la propriété aria-valuenow est mise à jour.', function() {
+					return pending(this, 'À tester manuellement avec la souris.');
 				});
 
-				it('Lorsque le composant est déplacé, la propriété aria-valuetext est mise à jour', function() {
-					return pending(this, 'À tester manuellement avec la souris');
+				it('Lorsque le composant est déplacé, la propriété aria-valuetext est mise à jour.', function() {
+					return pending(this, 'À tester manuellement avec la souris.');
 				});
 
 				it('Lorsque le composant est présenté verticalement, il doit posséder une propriété'
@@ -82,11 +82,11 @@ export default function createSliderText(factory) {
 
 			describe('Test 1.2: Le composant respecte-t-il une de ces conditions ?', function() {
 				it('Le composant possède une propriété aria-labelledby="[ID_titre]"'
-					+ ' référençant un passage de texte faisant office de titre', function() {
+					+ ' référençant un passage de texte faisant office de titre.', function() {
 					expect(this.slider.getAttribute('aria-labelledby')).to.be.ok;
 				});
 
-				it('Le composant possède un attribut title faisant office de titre', function() {
+				it('Le composant possède un attribut title faisant office de titre.', function() {
 					expect(this.slider.getAttribute('title')).to.be.ok;
 				});
 			});
@@ -98,12 +98,12 @@ export default function createSliderText(factory) {
 					this.dummyInput = $('<input type="text" class="slider-dummy" name="dummy" />').appendTo('body').get(0);
 				});
 
-				it('De l\'extérieur du composant, le focus est donné sur le composant', function() {
+				it('De l\'extérieur du composant, le focus est donné sur le composant.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.slider);
 				});
 
-				it('Depuis le composant, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant', function() {
+				it('Depuis le composant, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant.', function() {
 					effroi.keyboard.focus(this.slider);
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.dummyInput);
@@ -120,22 +120,22 @@ export default function createSliderText(factory) {
 					this.initialValue = this.slider.getAttribute('aria-valuenow');
 				});
 
-				it('[Haut] permet d\'augmenter la valeur du slider', function() {
+				it('[Haut] permet d\'augmenter la valeur du slider.', function() {
 					effroi.keyboard.hit('Up');
 					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 
-				it('[Droit] permet d\'augmenter la valeur du slider', function() {
+				it('[Droit] permet d\'augmenter la valeur du slider.', function() {
 					effroi.keyboard.hit('Right');
 					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 
-				it('[Bas] permet de diminuer la valeur du slider', function() {
+				it('[Bas] permet de diminuer la valeur du slider.', function() {
 					effroi.keyboard.hit('Down');
 					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 
-				it('[Gauche] permet de diminuer la valeur du slider', function() {
+				it('[Gauche] permet de diminuer la valeur du slider.', function() {
 					effroi.keyboard.hit('Left');
 					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});

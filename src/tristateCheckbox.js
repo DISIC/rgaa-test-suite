@@ -30,7 +30,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					cleanDom();
 				});
 
-				it('Le composant possède un role="checkbox"',	function() {
+				it('Le composant possède un role="checkbox".', function() {
 					const props = {
 						state: false,
 						items: [
@@ -49,7 +49,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					expect(mainCheckbox).to.be.ok;
 				});
 
-				it('Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné', function() {
+				it('Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné.', function() {
 					const props = {
 						state: true,
 						items: [
@@ -68,7 +68,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 				});
 
-				it('Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné', function() {
+				it('Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné.', function() {
 					const props = {
 						state: false,
 						items: [
@@ -87,7 +87,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 				});
 
-				it('Le composant possède la propriété aria-checked="mixed" lorsqu\'il est partiellement sélectionné',	function() {
+				it('Le composant possède la propriété aria-checked="mixed" lorsqu\'il est partiellement sélectionné.', function() {
 					const props = {
 						state: 'mixed',
 						items: [
@@ -106,7 +106,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 				});
 
-				it('Le composant possède l\'attribut tabindex="0", si nécessaire', function() {
+				it('Le composant possède l\'attribut tabindex="0", si nécessaire.', function() {
 					const props = {
 						state: false,
 						items: [
@@ -147,15 +147,15 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					cleanDom();
 				});
 
-				it('L\'image possède le role="presentation"',	function() {
+				it('L\'image possède le role="presentation".', function() {
 					if (!this.images.length) {
-						return pending(this, 'Aucune image trouvée');
+						return pending(this, 'Aucune image trouvée.');
 					}
 					expect(this.presentationImages.length).to.equal(1);
 				});
 
-				it('L\'image est une image insérée via CSS', function() {
-					return pending(this, 'Non testable automatiquement');
+				it('L\'image est une image insérée via CSS.', function() {
+					return pending(this, 'Non testable automatiquement.');
 				});
 			});
 
@@ -181,18 +181,18 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					cleanDom();
 				});
 
-				it('L\'élément structurant le groupe possède un role="group"', function() {
+				it('L\'élément structurant le groupe possède un role="group".', function() {
 					expect(this.structuringNode.getAttribute('role')).to.equal('group');
 				});
 
-				it('L\'élément structurant est précédé d\'un titre',
+				it('L\'élément structurant est précédé d\'un titre.',
 					function() {
 						expect(this.structuringNode.previousSibling.nodeName)
 							.to.be.oneOf(['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P']);
 					}
 				);
 
-				it('L\'élément structurant possède une propriété aria-labelledby="[ID_titre]" référençant le titre',
+				it('L\'élément structurant possède une propriété aria-labelledby="[ID_titre]" référençant le titre.',
 					function() {
 						expect(this.structuringNode.getAttribute('aria-labelledby')).to.exist;
 					}
@@ -204,7 +204,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					cleanDom();
 				});
 
-				it('L\'élément possède une propriété aria-checked="false" lorsqu\'aucune case à cocher du groupe n\'est cochée',
+				it('L\'élément possède une propriété aria-checked="false" lorsqu\'aucune case à cocher du groupe n\'est cochée.',
 					function() {
 						const props = {
 							state: 'mixed',
@@ -227,7 +227,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					}
 				);
 
-				it('L\'élément possède une propriété aria-checked="mixed", lorsqu\'au moins une case à cocher du groupe est cochée',
+				it('L\'élément possède une propriété aria-checked="mixed", lorsqu\'au moins une case à cocher du groupe est cochée.',
 					function() {
 						const props = {
 							state: false,
@@ -250,7 +250,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					}
 				);
 
-				it('L\'élément possède une propriété aria-checked="true", lorsque toutes les cases à cocher du groupe sont cochées',
+				it('L\'élément possède une propriété aria-checked="true", lorsque toutes les cases à cocher du groupe sont cochées.',
 					function() {
 						const props = {
 							state: 'mixed',
@@ -281,7 +281,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					cleanDom();
 				});
 
-				it('[Espace] permet de cocher le composant s\'il n\'est pas coché',
+				it('[Espace] permet de cocher le composant s\'il n\'est pas coché.',
 					function() {
 						const props = {
 							state: false,
@@ -306,7 +306,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					}
 				);
 
-				it('[Espace] permet de décocher le composant s\'il est coché',
+				it('[Espace] permet de décocher le composant s\'il est coché.',
 					function() {
 						const props = {
 							state: true,
@@ -337,7 +337,7 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 					cleanDom();
 				});
 
-				it('Si le composant est partiellement coché, [Espace] permet de cocher le composant',
+				it('Si le composant est partiellement coché, [Espace] permet de cocher le composant.',
 					function() {
 						const props = {
 							state: 'mixed',

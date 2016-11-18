@@ -46,11 +46,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					this.accordion = findChildByRole(this.node, 'tablist');
 				});
 
-				it('Le composant possède un role="tablist"', function() {
+				it('Le composant possède un role="tablist".', function() {
 					expect(this.accordion).to.be.ok;
 				});
 
-				it('Le composant possède la propriété aria-multiselectable="true"', function() {
+				it('Le composant possède la propriété aria-multiselectable="true".', function() {
 					expect(this.accordion.getAttribute('aria-multiselectable')).to.equal('true');
 				});
 			});
@@ -82,12 +82,12 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				});
 
 
-				it('Le titre possède un role="tab"', function() {
+				it('Le titre possède un role="tab".', function() {
 					expect(this.titles.length).to.equal(this.props.panels.length);
 				});
 
-				it('Le titre possède la propriété aria-selected="true" lorsque le panneau est affiché'
-					+ '\n\t  Le titre possède la propriété aria-selected="false" lorsque le panneau est masqué',
+				it('Le titre possède la propriété aria-selected="true" lorsque le panneau est affiché.'
+					+ '\n\t  Le titre possède la propriété aria-selected="false" lorsque le panneau est masqué.',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const title = this.titles[i];
@@ -129,11 +129,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					cleanDom();
 				});
 
-				it('Le panneau possède un role="tabpanel"', function() {
+				it('Le panneau possède un role="tabpanel".', function() {
 					expect(this.tabPanels.length).to.equal(this.props.panels.length);
 				});
 
-				it('Le panneau possède la propriété aria-labelledby="[ID_header]"', function() {
+				it('Le panneau possède la propriété aria-labelledby="[ID_header]".', function() {
 					this.props.panels.forEach((panel, i) => {
 						const tabPanel = this.tabPanels[i];
 						const title = this.titles[i];
@@ -141,8 +141,8 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					});
 				});
 
-				it('Le panneau possède la propriété aria-expanded="true" lorsque le panneau est affiché'
-					+ '\n\t  Le panneau possède la propriété aria-expanded="false" lorsque le panneau est masqué',
+				it('Le panneau possède la propriété aria-expanded="true" lorsque le panneau est affiché.'
+					+ '\n\t  Le panneau possède la propriété aria-expanded="false" lorsque le panneau est masqué.',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const tabPanel = this.tabPanels[i];
@@ -152,8 +152,8 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					}
 				);
 
-				it('Le panneau possède la propriété aria-hidden="false" lorsque le panneau est affiché'
-					+ '\n\t  Le panneau possède la propriété aria-expanded="true" lorsque le panneau est masqué',
+				it('Le panneau possède la propriété aria-hidden="false" lorsque le panneau est affiché.'
+					+ '\n\t  Le panneau possède la propriété aria-expanded="true" lorsque le panneau est masqué.',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const tabPanel = this.tabPanels[i];
@@ -172,7 +172,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				});
 
 				it('De l\'extérieur du composant, lorsque aucun panneau n\'est actif, le focus est donné sur le titre'
-					+ ' du premier panneau [TAB]', function() {
+					+ ' du premier panneau [TAB].', function() {
 						const props = {
 							panels: [
 								{
@@ -259,7 +259,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					}
 				);
 
-				it('La tabulation permet d\'atteindre l\'élément suivant ou précédent du panneau actif ou des panneaux actifs lorsque plusieurs panneaux sont activés',
+				it('La tabulation permet d\'atteindre l\'élément suivant ou précédent du panneau actif ou des panneaux actifs lorsque plusieurs panneaux sont activés.',
 					function() {
 						const props = {
 							panels: [
@@ -306,7 +306,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					}
 				);
 
-				it('Lorsque le dernier élément focusable du composant est atteint, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant',
+				it('Lorsque le dernier élément focusable du composant est atteint, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant.',
 					function() {
 						const props = {
 							panels: [
@@ -345,7 +345,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					}
 				);
 
-				it('Lorsque le premier élément focusable du composant est atteint, le focus est donné sur l\'élément focusable précédent à l\'extérieur du composant [SHIFT TAB]',
+				it('Lorsque le premier élément focusable du composant est atteint, le focus est donné sur l\'élément focusable précédent à l\'extérieur du composant [SHIFT TAB].',
 					function() {
 						const props = {
 							panels: [
@@ -424,7 +424,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					expect(document.activeElement).to.equal(this.titles[0]);
 				});
 
-				it('À partir du titre d\'un accordéon, [Bas et Droite] permet d\'atteindre le titre suivant', function() {
+				it('À partir du titre d\'un accordéon, [Bas et Droite] permet d\'atteindre le titre suivant.', function() {
 
 					// Focus on second panel
 					this.titles[1].focus();
@@ -471,7 +471,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					cleanDom();
 				});
 
-				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Espace] permet d\'ouvrir le panneau', function() {
+				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Espace] permet d\'ouvrir le panneau.', function() {
 					// Focus on first panel
 					this.titles[0].focus();
 					effroi.keyboard.hit('Spacebar');
@@ -482,7 +482,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 						.to.equal('false');
 				});
 
-				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Entrée] permet d\'ouvrir le panneau', function() {
+				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Entrée] permet d\'ouvrir le panneau.', function() {
 					// Focus on first panel
 					this.titles[0].focus();
 					effroi.keyboard.enter();

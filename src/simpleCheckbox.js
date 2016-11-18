@@ -25,7 +25,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					cleanDom();
 				});
 
-				it('Le composant possède un role="checkbox"', function() {
+				it('Le composant possède un role="checkbox".', function() {
 					const props = {
 						checked: true
 					};
@@ -36,7 +36,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					expect(checkbox).to.be.ok;
 				});
 
-				it('Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné', function() {
+				it('Le composant possède la propriété aria-checked="true" lorsqu\'il est sélectionné.', function() {
 					const props = {
 						checked: true
 					};
@@ -47,7 +47,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					expect(checkbox.getAttribute('aria-checked')).to.equal('true');
 				});
 
-				it('Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné', function() {
+				it('Le composant possède la propriété aria-checked="false" lorsqu\'il n\'est pas sélectionné.', function() {
 					const props = {
 						checked: false
 					};
@@ -58,7 +58,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					expect(checkbox.getAttribute('aria-checked')).to.equal('false');
 				});
 
-				it('Le composant possède l\'attribut tabindex="0", si nécessaire', function() {
+				it('Le composant possède l\'attribut tabindex="0", si nécessaire.', function() {
 					const props = {
 						checked: true
 					};
@@ -84,15 +84,15 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					cleanDom();
 				});
 
-				it('L\'image possède le role="presentation"',	function() {
+				it('L\'image possède le role="presentation".', function() {
 					if (!this.images.length) {
-						return pending(this, 'Aucune image trouvée');
+						return pending(this, 'Aucune image trouvée.');
 					}
 					expect(this.presentationImages.length).to.equal(1);
 				});
 
-				it('L\'image est une image insérée via CSS', function() {
-					return pending(this, 'Non testable automatiquement');
+				it('L\'image est une image insérée via CSS.', function() {
+					return pending(this, 'Non testable automatiquement.');
 				});
 			})
 
@@ -103,7 +103,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					cleanDom();
 				});
 
-				it('[Espace] permet de cocher le composant s\'il n\'est pas coché', function() {
+				it('[Espace] permet de cocher le composant s\'il n\'est pas coché.', function() {
 					const props = {
 						checked: false
 					};
@@ -118,7 +118,7 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 					expect(checkbox.getAttribute('aria-checked')).to.equal('true');
 				});
 
-				it('[Espace] permet de décocher le composant s\'il est coché', function() {
+				it('[Espace] permet de décocher le composant s\'il est coché.', function() {
 					const props = {
 						checked: true
 					};

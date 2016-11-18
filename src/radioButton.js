@@ -28,22 +28,22 @@ export default function createRadioButtonTest(factory) {
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1: Chaque composant principal respecte-t-il ces conditions ?', function() {
-				it('Le composant possède un role="radiogroup"', function() {
+				it('Le composant possède un role="radiogroup".', function() {
 					expect(this.container).to.exist;
 				});
 
-				it('Au maximum, un bouton radio du composant est sélectionné', function() {
+				it('Au maximum, un bouton radio du composant est sélectionné.', function() {
 					expect(this.checkedButtons.length).to.be.at.most(1);
 				});
 			});
 
 			describe('Test 1.2 : Chaque bouton radio respecte-t-il ces conditions ?', function() {
-				it('L\'élément possède un role="radio"', function() {
+				it('L\'élément possède un role="radio".', function() {
 					expect(this.buttons.length).to.equal(this.props.items.length);
 				});
 
-				it('Lorsque l\'élément n\'est pas sélectionné, il possède une propriété aria-checked="false"'
-					+ '\n\t  Lorsque l\'élément est sélectionné, il possède une propriété aria-checked="true', function() {
+				it('Lorsque l\'élément n\'est pas sélectionné, il possède une propriété aria-checked="false".'
+					+ '\n\t  Lorsque l\'élément est sélectionné, il possède une propriété aria-checked="true".', function() {
 					this.props.items.forEach((item, i) => {
 						const button = this.buttons.item(i);
 
@@ -54,15 +54,15 @@ export default function createRadioButtonTest(factory) {
 			});
 
 			describe('Test 1.3 : Chaque état d\'un bouton radio, symbolisé par une image, respecte-t-il une de ces conditions ?', function() {
-				it('L\'image possède un role="presentation"', function() {
+				it('L\'image possède un role="presentation".', function() {
 					if (!this.images.length) {
-						return pending(this, 'Aucune image trouvée');
+						return pending(this, 'Aucune image trouvée.');
 					}
 					expect(this.presentationImages.length).to.equal(props.items.length);
 				});
 
-				it('L\'image est une image insérée via CSS', function() {
-					return pending(this, 'Non testable automatiquement');
+				it('L\'image est une image insérée via CSS.', function() {
+					return pending(this, 'Non testable automatiquement.');
 				});
 			});
 		});
@@ -85,19 +85,19 @@ export default function createRadioButtonTest(factory) {
 			});
 
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-t-elle ces conditions ?', function() {
-				it('De l\'extérieur du composant, le focus est donné sur l\'élément actif', function() {
+				it('De l\'extérieur du composant, le focus est donné sur l\'élément actif.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 				});
 
-				it('Depuis un élément, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant', function() {
+				it('Depuis un élément, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.dummyInput);
 				});
 
-				it('De l\'extérieur du composant, si aucun élément n\'est sélectionné, le focus est donné sur le premier élément du composant', function() {
+				it('De l\'extérieur du composant, si aucun élément n\'est sélectionné, le focus est donné sur le premier élément du composant.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 					effroi.keyboard.tab();
@@ -109,7 +109,7 @@ export default function createRadioButtonTest(factory) {
 
 			describe('Test 2.2 : L\'utilisation des [TOUCHES DE DIRECTION] respecte-t-elle ces conditions ?', function() {
 				// because of the previous test, the current focus is the first button of the second radiogroup
-				it('À partir d\'un élément, [Bas] déplace le focus sur l\'élément suivant', function() {
+				it('À partir d\'un élément, [Bas] déplace le focus sur l\'élément suivant.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 					//this.checkedButtons.item(0) === this.buttons.item(1)
@@ -117,7 +117,7 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.buttons.item(2));
 				});
 
-				it('À partir d\'un élément, [Droit] déplace le focus sur l\'élément suivant', function() {
+				it('À partir d\'un élément, [Droit] déplace le focus sur l\'élément suivant.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 					//this.checkedButtons.item(0) === this.buttons.item(1)
@@ -125,7 +125,7 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.buttons.item(2));
 				});
 
-				it('À partir d\'un élément, [Haut] déplace le focus sur l\'élément précédent', function() {
+				it('À partir d\'un élément, [Haut] déplace le focus sur l\'élément précédent.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 					//this.checkedButtons.item(0) === this.buttons.item(1)
@@ -133,7 +133,7 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.buttons.item(0));
 				});
 
-				it('À partir d\'un élément, [Gauche] déplace le focus sur l\'élément précédent', function() {
+				it('À partir d\'un élément, [Gauche] déplace le focus sur l\'élément précédent.', function() {
 					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 					//this.checkedButtons.item(0) === this.buttons.item(1)
@@ -141,7 +141,7 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.buttons.item(0));
 				});
 
-				it('À partir du premier élément, [Haut et Gauche] déplace le focus sur le dernier élément', function() {
+				it('À partir du premier élément, [Haut et Gauche] déplace le focus sur le dernier élément.', function() {
 					effroi.keyboard.tab();
 					effroi.keyboard.tab();
 					effroi.keyboard.tab();
@@ -159,7 +159,7 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.cleanButtons.item(lastIndex));
 				});
 
-				it('À partir du dernier élément, [Bas et Droit] déplace le focus sur le premier élément', function() {
+				it('À partir du dernier élément, [Bas et Droit] déplace le focus sur le premier élément.', function() {
 					effroi.keyboard.tab();
 					effroi.keyboard.tab();
 					effroi.keyboard.tab();

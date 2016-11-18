@@ -41,21 +41,21 @@ export default function createDialogTest(factory) {
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describeSome('Test 1.1: Le composant respecte-t-il une de ces conditions ?', function() {
-				it('Le composant possède un role="dialog"', function() {
+				it('Le composant possède un role="dialog".', function() {
 					expect(this.dialog).to.exist;
 				});
 
-				it('Le composant possède un role="alertdialog"', function() {
+				it('Le composant possède un role="alertdialog".', function() {
 					expect(this.alertDialog).to.exist;
 				});
 			});
 
 			describeSome('Test 1.2 : Le composant respecte-t-il une de ces conditions ?', function() {
-				it('Le composant possède une propriété aria-label="[Titre de la fenêtre]"', function() {
+				it('Le composant possède une propriété aria-label="[Titre de la fenêtre]".', function() {
 					expect(this.container.getAttribute('aria-label')).to.exist;
 				});
 
-				it('Le composant possède une propriété aria-labelledby="[ID_titre]" référençant un passage de texte faisant office de titre', function() {
+				it('Le composant possède une propriété aria-labelledby="[ID_titre]" référençant un passage de texte faisant office de titre.', function() {
 					expect(this.container.getAttribute('aria-labelledby')).to.exist;
 				});
 			});
@@ -78,7 +78,7 @@ export default function createDialogTest(factory) {
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-elle ces conditions ?', function() {
-				it('La tabulation permet d\'atteindre l\'élément suivant et précédent du composant', function() {
+				it('La tabulation permet d\'atteindre l\'élément suivant et précédent du composant.', function() {
 					effroi.keyboard.focus(this.focusables[0]);
 
 					effroi.keyboard.tab();
@@ -90,7 +90,7 @@ export default function createDialogTest(factory) {
 						.to.equal(this.focusables[0]);
 				});
 
-				it('La tabulation est restreinte aux éléments focusables du composant', function() {
+				it('La tabulation est restreinte aux éléments focusables du composant.', function() {
 					effroi.keyboard.focus(this.focusables[0]);
 
 					effroi.keyboard.shiftTab();

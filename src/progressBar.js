@@ -33,17 +33,17 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 					this.progressBar = findChildByRole(this.node, 'progressbar');
 				});
 
-				it('Le composant possède un role="progressbar"', function() {
+				it('Le composant possède un role="progressbar".', function() {
 					expect(this.progressBar.getAttribute('role'))
 						.to.be.ok;
 				});
 
-				it('Le composant possède une propriété aria-valuemin="[valeur minimale]"', function() {
+				it('Le composant possède une propriété aria-valuemin="[valeur minimale]".', function() {
 					expect(Number(this.progressBar.getAttribute('aria-valuemin')))
 						.to.equal(this.props.min);
 				});
 
-				it('Le composant possède une propriété aria-valuemax="[valeur maximale]"', function() {
+				it('Le composant possède une propriété aria-valuemax="[valeur maximale]".', function() {
 					expect(Number(this.progressBar.getAttribute('aria-valuemax')))
 						.to.equal(this.props.max);
 				});
@@ -66,12 +66,12 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 						.to.not.be.empty;
 				});
 
-				it('Le composant possède une propriété aria-labelledby="[ID_texte]" référençant un passage de texte faisant office de nom', function() {
+				it('Le composant possède une propriété aria-labelledby="[ID_texte]" référençant un passage de texte faisant office de nom.', function() {
 					expect(this.progressBar.getAttribute('aria-labelledby'))
 						.to.not.be.empty;
 				});
 
-				it('Le composant possède un attribut title faisant office de nom', function() {
+				it('Le composant possède un attribut title faisant office de nom.', function() {
 					expect(this.progressBar.querySelector('img[alt]'))
 						.to.not.be.empty;
 				});
@@ -89,18 +89,18 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 					this.progressBar = findChildByRole(this.node, 'progressbar');
 				});
 
-				it('Le composant possède une propriété aria-valuenow="[valeur courante]"', function() {
+				it('Le composant possède une propriété aria-valuenow="[valeur courante]".', function() {
 					expect(Number(this.progressBar.getAttribute('aria-valuenow')))
 						.to.equal(this.props.value);
 				});
 
-				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + texte]"', function() {
+				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + texte]".', function() {
 					expect(this.progressBar.getAttribute('aria-valuetext'))
 						.to.equal(makeLabel(this.props));
 				});
 
-				it('La valeur de la propriété aria-valuenow est mise à jour selon la progression');
-				it('La valeur de la propriété aria-valuetext est mise à jour selon la progression');
+				it('La valeur de la propriété aria-valuenow est mise à jour selon la progression.');
+				it('La valeur de la propriété aria-valuetext est mise à jour selon la progression.');
 			});
 
 			describe('Test 1.4 : Chaque progression, dont la valeur courante est inconnue respecte-t-elle ces conditions ?', function() {
@@ -115,20 +115,20 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 					this.progressBar = findChildByRole(this.node, 'progressbar');
 				});
 
-				it('Le composant ne possède pas de propriété aria-valuenow', function() {
+				it('Le composant ne possède pas de propriété aria-valuenow.', function() {
 					expect(this.progressBar.getAttribute('aria-valuenow'))
 						.to.not.be.ok;
 				});
 
-				it('Le composant ne possède pas de propriété aria-valuetext', function() {
+				it('Le composant ne possède pas de propriété aria-valuetext.', function() {
 					expect(this.progressBar.getAttribute('aria-valuetext'))
 						.to.not.be.ok;
 				});
 			});
 
 			describe('Test 1.5 : Chaque progression qui concerne une région spécifique d\'un document respecte-t-elle ces conditions ?', function() {
-				it('La région concernée possède une propriété aria-describedby="[ID_composant]"');
-				it('La région concernée possède une propriété aria-busy="true" durant toute la durée de la progression');
+				it('La région concernée possède une propriété aria-describedby="[ID_composant]".');
+				it('La région concernée possède une propriété aria-busy="true" durant toute la durée de la progression.');
 			});
 		});
 	});
