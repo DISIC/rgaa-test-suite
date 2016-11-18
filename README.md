@@ -1,6 +1,6 @@
 # Suite de tests pour composants RGAA 3
 
-Une suite de tests mocha/karma pour tester la conformité de composants ARIA avec le référentiel RGAA 3.
+Une suite de tests [mocha](https://github.com/mochajs/mocha) pour tester la conformité de composants ARIA avec le référentiel RGAA 3.
 
 ## Installation
 
@@ -8,15 +8,17 @@ Une suite de tests mocha/karma pour tester la conformité de composants ARIA ave
 npm install --save-dev rgaa-test-suite
 ```
 
+Les tests nécessitant un DOM, vous devriez également utiliser un lanceur de tests comme [karma](https://github.com/karma-runner/karma) ou un DOM virtuel comme [jsdom](https://github.com/tmpvar/jsdom).
+
 ## Usage
 
-Les composants devant être initialiés d'une certaine manière pour chaque test, un peu de code est nécessaire pour les mettre en place.
+Les composants devant être initialisés d'une certaine manière pour chaque test, un peu de code est nécessaire pour les mettre en place.
 
-Typiquement, chaque test nécessite d'écrire une petite fonction pour créer le composant concerné en fonction des paramètres requis.
+Typiquement, chaque test nécessite d'écrire une petite fonction pour créer le composant concerné en fonction des paramètres requis par le test.
 
 Ce fonctionnement permet de tester des composants implémentés avec n'importe quel framework, puisque c'est à l'utilisateur de les initialiser. Cela permet à la suite de tests de rester générique, et de fonctionner avec des composants JavaScript pur, jQuery, Angular, ou React par exemple.
 
-Attention toutefois, ces tests ne sont pas exhaustifs. Certains d'entre eux ne peuvent être réalisés automatiquement, et seront donc à vérifier manuellement pour s'assurer d'une conformité totale. Ces tests seront tout de même affichés dans les résultats avec le statut skipped.
+Attention toutefois, ces tests ne sont pas exhaustifs. Certains d'entre eux ne peuvent être réalisés automatiquement, et seront donc à vérifier manuellement pour s'assurer d'une conformité totale. Ces tests seront tout de même affichés dans les résultats avec le statut skipped et un message d'avertissement.
 
 ### Exemple
 
@@ -46,7 +48,7 @@ function progressBarFactory(options) {
 describe('Ma super barre de progression', progressBar(progressBarFactory));
 ```
 
-Au lancement de karma, `progressBar()` exécutera tous les tests du motif de conception :
+Au lancement de mocha, `progressBar()` exécutera tous les tests du motif de conception :
 
 ```sh
 Ma super barre de progression
