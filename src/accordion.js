@@ -46,6 +46,10 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					this.accordion = findChildByRole(this.node, 'tablist');
 				});
 
+				after(function() {
+					cleanDom();
+				});
+
 				it('Le composant possède un role="tablist".', function() {
 					expect(this.accordion).to.be.ok;
 				});
@@ -81,6 +85,9 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					this.titles = findChildrenByRole(this.node, 'tab');
 				});
 
+				after(function() {
+					cleanDom();
+				});
 
 				it('Le titre possède un role="tab".', function() {
 					expect(this.titles.length).to.equal(this.props.panels.length);
