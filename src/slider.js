@@ -99,12 +99,13 @@ export default function createSliderText(factory) {
 				});
 
 				it('De l\'extérieur du composant, le focus est donné sur le composant', function() {
-					tab();
+					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.slider);
 				});
 
 				it('Depuis le composant, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant', function() {
-					tab();
+					effroi.keyboard.focus(this.slider);
+					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.dummyInput);
 				});
 
@@ -114,34 +115,29 @@ export default function createSliderText(factory) {
 			});
 
 			describe('Test 2.2 :  L\'utilisation des [TOUCHES DE DIRECTION] respecte-t-elle ces conditions ?', function() {
-					focus(this.slider);
 				beforeEach(function() {
+					effroi.keyboard.focus(this.slider);
 					this.initialValue = this.slider.getAttribute('aria-valuenow');
 				});
 
 				it('[Haut] permet d\'augmenter la valeur du slider', function() {
-					press('up');
-					this.afterUp = this.slider.getAttribute('aria-valuenow');
-					expect(this.afterUp).to.not.be.equal(this.initialValue);
+					effroi.keyboard.hit('Up');
+					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 
 				it('[Droit] permet d\'augmenter la valeur du slider', function() {
-					press('right');
-					const afterRight = this.slider.getAttribute('aria-valuenow');
-					expect(afterRight).to.not.be.equal(this.initialValue);
-					expect(afterRight).to.not.be.equal(this.afterUp);
+					effroi.keyboard.hit('Right');
+					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 
 				it('[Bas] permet de diminuer la valeur du slider', function() {
-					press('down');
-					const afterDown = this.slider.getAttribute('aria-valuenow');
-					expect(afterDown).to.be.equal(this.afterUp);
+					effroi.keyboard.hit('Down');
+					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 
 				it('[Gauche] permet de diminuer la valeur du slider', function() {
-					press('left');
-					const afterLeft = this.slider.getAttribute('aria-valuenow');
-					expect(afterLeft).to.be.equal(this.initialValue);
+					effroi.keyboard.hit('Left');
+					expect(this.slider.getAttribute('aria-valuenow')).to.not.be.equal(this.initialValue);
 				});
 			});
 		});
