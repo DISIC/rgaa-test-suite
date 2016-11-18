@@ -7,7 +7,7 @@ import pending from './pending';
  */
 export default function createRadioButtonTest(factory) {
 	return function testRadioButton() {
-		before(function() {
+		beforeEach(function() {
 			this.props = {
 				id: 'un-groupe-avec-un-bouton-activé',
 				label: 'Je suis le titre du groupe',
@@ -68,7 +68,8 @@ export default function createRadioButtonTest(factory) {
 		});
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
-			before(function() {
+			beforeEach(function() {
+				this.dummyInput = $('<input type="text" class="slider-dummy" name="dummy" />').appendTo('body').get(0);
 				const cleanProps = {
 					id: 'un-groupe-sans-rien-activé',
 					label: 'Je suis le titre du groupe sans bouton activé',
@@ -89,33 +90,63 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
 				});
 
-				it('De l\'extérieur du composant, si aucun élément n\'est sélectionné, le focus est donné sur le premier élément du composant', function() {
+				it('Depuis un élément, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant', function() {
 					effroi.keyboard.tab();
-					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
+					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.dummyInput);
 				});
 
-				it('Depuis un élément, le focus est donné sur l\'élément focusable suivant à l\'extérieur du composant', function() {
+				it('De l\'extérieur du composant, si aucun élément n\'est sélectionné, le focus est donné sur le premier élément du composant', function() {
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.dummyInput);
+					effroi.keyboard.tab();
 					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
 				});
 			});
 
 			describe('Test 2.2 : L\'utilisation des [TOUCHES DE DIRECTION] respecte-t-elle ces conditions ?', function() {
 				// because of the previous test, the current focus is the first button of the second radiogroup
-				it('À partir d\'un élément, [Bas et Droit] déplace le focus sur l\'élément suivant', function() {
+				it('À partir d\'un élément, [Bas] déplace le focus sur l\'élément suivant', function() {
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
+					//this.checkedButtons.item(0) === this.buttons.item(1)
 					effroi.keyboard.hit('Down');
-					expect(document.activeElement).to.equal(this.cleanButtons.item(1));
-					effroi.keyboard.hit('Right');
-					expect(document.activeElement).to.equal(this.cleanButtons.item(2));
+					expect(document.activeElement).to.equal(this.buttons.item(2));
 				});
 
-				it('À partir d\'un élément, [Haut et Gauche] déplace le focus sur l\'élément précédent', function() {
+				it('À partir d\'un élément, [Droit] déplace le focus sur l\'élément suivant', function() {
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
+					//this.checkedButtons.item(0) === this.buttons.item(1)
+					effroi.keyboard.hit('Right');
+					expect(document.activeElement).to.equal(this.buttons.item(2));
+				});
+
+				it('À partir d\'un élément, [Haut] déplace le focus sur l\'élément précédent', function() {
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
+					//this.checkedButtons.item(0) === this.buttons.item(1)
 					effroi.keyboard.hit('Up');
-					expect(document.activeElement).to.equal(this.cleanButtons.item(1));
+					expect(document.activeElement).to.equal(this.buttons.item(0));
+				});
+
+				it('À partir d\'un élément, [Gauche] déplace le focus sur l\'élément précédent', function() {
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.checkedButtons.item(0));
+					//this.checkedButtons.item(0) === this.buttons.item(1)
 					effroi.keyboard.hit('Left');
-					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
+					expect(document.activeElement).to.equal(this.buttons.item(0));
 				});
 
 				it('À partir du premier élément, [Haut et Gauche] déplace le focus sur le dernier élément', function() {
+					effroi.keyboard.tab();
+					effroi.keyboard.tab();
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
+
 					const lastIndex = this.cleanButtons.length - 1;
 					effroi.keyboard.hit('Up');
 					expect(document.activeElement).to.equal(this.cleanButtons.item(lastIndex));
@@ -129,6 +160,15 @@ export default function createRadioButtonTest(factory) {
 				});
 
 				it('À partir du dernier élément, [Bas et Droit] déplace le focus sur le premier élément', function() {
+					effroi.keyboard.tab();
+					effroi.keyboard.tab();
+					effroi.keyboard.tab();
+					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
+
+					effroi.keyboard.hit('Down');
+					effroi.keyboard.hit('Down');
+					effroi.keyboard.hit('Down');
+
 					effroi.keyboard.hit('Down');
 					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
 
@@ -141,12 +181,13 @@ export default function createRadioButtonTest(factory) {
 				});
 			});
 
-			after(function() {
+			afterEach(function() {
+				this.dummyInput.remove();
 				this.cleanNode.remove();
 			});
 		});
 
-		after(function() {
+		afterEach(function() {
 			this.node.remove();
 		});
 	};
