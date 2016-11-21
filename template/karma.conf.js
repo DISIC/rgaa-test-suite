@@ -20,6 +20,12 @@ module.exports = function(config) {
 		browsers: [
 			'Chrome',
 			'Firefox'
-		]
+		],
+		preprocessors: {
+			'test/*.js': ['webpack']
+		},
+		webpack: {
+			devtool: 'inline-source-map'
+		}
 	});
 };
