@@ -1,3 +1,4 @@
+import effroi from 'effroi';
 import pending from './pending';
 import describeSome from './describeSome';
 

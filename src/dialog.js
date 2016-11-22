@@ -1,4 +1,5 @@
 import tabbable from 'tabbable';
+import effroi from 'effroi';
 import cleanDom from './cleanDom';
 import describeSome from './describeSome';
 

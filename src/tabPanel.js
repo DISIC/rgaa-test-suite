@@ -1,3 +1,4 @@
+import effroi from 'effroi';
 import {findChildByRole, findChildrenByRole} from './dom';
 import describeSome from './describeSome';
 

@@ -1,3 +1,4 @@
+import effroi from 'effroi';
 import {findChildByRole} from './dom';
 import pending from './pending';
 import cleanDom from './cleanDom';
