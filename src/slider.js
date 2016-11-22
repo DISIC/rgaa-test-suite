@@ -26,6 +26,25 @@ export default function createSliderText(factory) {
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1: Le composant respecte-t-il ces conditions ?', function() {
+				beforeEach(function() {
+					this.labelledNode = factory({
+						...this.props,
+						id: 'withLabel',
+						withLabel: true
+					});
+
+					this.verticalNode = factory({
+						...this.props,
+						id: 'vertical',
+						isVertical: true
+					});
+				});
+
+				after(function() {
+					this.labelledNode.remove();
+					this.verticalNode.remove();
+				});
+
 				it('Le composant possède un role="slider".', function() {
 					expect(this.slider).to.exist;
 				});
@@ -43,18 +62,8 @@ export default function createSliderText(factory) {
 				});
 
 				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + text]".', function() {
-					before(function() {
-						this.labelledNode = factory({
-							...this.props,
-							id: 'withLabel',
-							withLabel: true
-						});
-					});
 					const slider = this.labelledNode.querySelector('[role="slider"]');
 					expect(slider.getAttribute('aria-valuetext')).to.be.ok;
-					after(function() {
-						this.labelledNode.remove();
-					});
 				});
 
 				it('Lorsque le composant est déplacé, la propriété aria-valuenow est mise à jour.', function() {
@@ -67,18 +76,8 @@ export default function createSliderText(factory) {
 
 				it('Lorsque le composant est présenté verticalement, il doit posséder une propriété'
 					+ ' aria-orientation="vertical", cette règle est-elle respectée ?', function() {
-					before(function() {
-						this.verticalNode = factory({
-							...this.props,
-							id: 'vertical',
-							isVertical: true
-						});
-					});
 					const slider = this.verticalNode.querySelector('[role="slider"]');
 					expect(slider.getAttribute('aria-orientation')).to.equal('vertical');
-					after(function() {
-						this.verticalNode.remove();
-					});
 				});
 			});
 
