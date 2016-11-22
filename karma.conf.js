@@ -16,8 +16,7 @@ module.exports = function(config) {
 			'test/*.js'
 		],
 		frameworks: [
-			'mocha',
-			'chai'
+			'mocha'
 		],
 		reporters: [
 			'mocha'

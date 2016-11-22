@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import {random} from 'lodash';
 import {findChildByRole} from './dom';
 import pending from './pending';

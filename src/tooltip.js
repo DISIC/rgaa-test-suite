@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import tabbable from 'tabbable';
 import effroi from 'effroi';
 

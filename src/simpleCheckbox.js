@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import effroi from 'effroi';
 import {findChildByRole} from './dom';
 import pending from './pending';
