@@ -31,13 +31,16 @@ export default (factory) => () =>
 			this.node = factory(this.props);
 			this.otherFocusable = document.createElement('button');
 
+			this.wrapper = document.createElement('div');
+			this.wrapper.appendChild(this.node);
+			this.wrapper.appendChild(this.otherFocusable);
+
 			// The node needs to be mounted to the DOM as soon
 			// as possible, to handle the case when the tooltip
 			// does not renders besides it.
-			document.body.appendChild(this.node);
-			document.body.appendChild(this.otherFocusable);
+			document.body.appendChild(this.wrapper);
 
-			const tabbableChildren = tabbable(this.node);
+			const tabbableChildren = tabbable(this.wrapper);
 
 			if (tabbableChildren.length === 0) {
 				throw new Error(
@@ -50,12 +53,11 @@ export default (factory) => () =>
 			this.trigger = tabbableChildren[0];
 
 			// Should render the tooltip.
-			effroi.keyboard.focus(this.otherFocusable);
+			effroi.keyboard.focus(this.trigger);
 		});
 
 		afterEach(function() {
-			document.body.removeChild(this.node);
-			document.body.removeChild(this.otherFocusable);
+			document.body.removeChild(this.wrapper);
 		});
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {

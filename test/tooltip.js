@@ -1,6 +1,3 @@
-import {render, createElement} from 'react';
-import ReactBootstrap from 'react-bootstrap';
-import RgaaReactBootstrap from 'rgaa_react-bootstrap';
 import {tooltip, createWrapper} from '../src';
 
 
@@ -11,26 +8,10 @@ import {tooltip, createWrapper} from '../src';
 describe(
 	'React Bootstrap Tooltip',
 	tooltip((options) => {
-		const node = document.createElement('div');
+		$(document).tooltip();
 
-		render(
-			createElement(
-				RgaaReactBootstrap.TooltipOverlayTrigger,
-				{
-					overlay: createElement(
-						ReactBootstrap.Tooltip,
-						{},
-						options.text
-					)
-				},
-				createElement(
-					ReactBootstrap.Button,
-					{},
-					'Text'
-				)
-			),
-			node
-		);
+		const node = document.createElement('button');
+		node.title = options.text;
 
 		return node;
 	}
