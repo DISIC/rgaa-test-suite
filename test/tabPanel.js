@@ -1,7 +1,7 @@
 import {render, createElement} from 'react';
 import ReactBootstrap from 'react-bootstrap';
 import RgaaReactBootstrap from 'rgaa_react-bootstrap';
-import {tabPanel, createWrapper} from '../src';
+import {tabPanel} from '../src';
 
 
 
@@ -34,9 +34,7 @@ describe(
 			);
 		});
 
-		const node = createWrapper(
-			'rgaa-react-bootstrap-progress-bar'
-		);
+		const node = document.createElement('div');
 
 		render(
 			createElement(

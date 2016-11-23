@@ -10,8 +10,6 @@ import Rheostat from 'rheostat';
 describe(
 	'jQuery nstSlider',
 	slider(({id, min, max, current, withLabel, isVertical}) => {
-		const node = createWrapper(`jquery-nstslider-${id}`);
-
 		const $slider = $(`
 			<div
 				class="nstSlider"
@@ -29,14 +27,15 @@ describe(
 			</div>
 			${withLabel ? '<div class="label"></div>' : ''}
 		`);
-		$slider.appendTo(node);
+
 		$slider.filter('.nstSlider').nstSlider({
 			left_grip_selector: '.grip',
 			value_changed_callback: function(cause, leftValue) {
-				$(node).find('.label').text(leftValue);
+				$slider.find('.label').text(leftValue);
 			}
 		});
-		return node;
+
+		return $slider[0];
 	}
 ));
 
@@ -52,9 +51,7 @@ describe(
 			values: [current]
 		};
 
-		const node = createWrapper(
-			'rgaa-react-bootstrap-progress-bar'
-		);
+		const node = document.createElement('div');
 
 		render(createElement(Rheostat, props), node);
 

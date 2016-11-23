@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import effroi from 'effroi';
 import pending from './pending';
 import describeSome from './describeSome';
+import setupSandbox from './setupSandbox';
 
 
 
@@ -19,32 +20,13 @@ export default function createSliderText(factory) {
 				isVertical: false,
 				withLabel: false
 			};
-			this.node = factory(this.props);
-			this.slider = this.node.querySelector('[role="slider"]');
-		});
 
+			this.sandbox = setupSandbox(factory(this.props));
+			this.slider = this.sandbox.querySelector('[role="slider"]');
+		});
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1: Le composant respecte-t-il ces conditions ?', function() {
-				beforeEach(function() {
-					this.labelledNode = factory({
-						...this.props,
-						id: 'withLabel',
-						withLabel: true
-					});
-
-					this.verticalNode = factory({
-						...this.props,
-						id: 'vertical',
-						isVertical: true
-					});
-				});
-
-				after(function() {
-					this.labelledNode.remove();
-					this.verticalNode.remove();
-				});
-
 				it('Le composant possède un role="slider".', function() {
 					expect(this.slider).to.exist;
 				});
@@ -62,7 +44,15 @@ export default function createSliderText(factory) {
 				});
 
 				it('Le composant possède, si nécessaire, une propriété aria-valuetext="[valeur courante + text]".', function() {
-					const slider = this.labelledNode.querySelector('[role="slider"]');
+					this.sandbox = setupSandbox(
+						factory({
+							...this.props,
+							id: 'withLabel',
+							withLabel: true
+						})
+					);
+
+					const slider = this.sandbox.querySelector('[role="slider"]');
 					expect(slider.getAttribute('aria-valuetext')).to.be.ok;
 				});
 
@@ -76,7 +66,15 @@ export default function createSliderText(factory) {
 
 				it('Lorsque le composant est présenté verticalement, il doit posséder une propriété'
 					+ ' aria-orientation="vertical", cette règle est-elle respectée ?', function() {
-					const slider = this.verticalNode.querySelector('[role="slider"]');
+					this.sandbox = setupSandbox(
+						factory({
+							...this.props,
+							id: 'vertical',
+							isVertical: true
+						})
+					);
+
+					const slider = this.sandbox.querySelector('[role="slider"]');
 					expect(slider.getAttribute('aria-orientation')).to.equal('vertical');
 				});
 			});
@@ -142,9 +140,5 @@ export default function createSliderText(factory) {
 				});
 			});
 		});
-
-		afterEach(function() {
-			this.node.remove();
-		})
 	};
 }

@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import effroi from 'effroi';
-import {findChildByRole, findChildrenByRole} from './dom';
 import describeSome from './describeSome';
+import setupSandbox from './setupSandbox';
 
 
 
@@ -41,30 +41,24 @@ export default (factory) => () =>
 				]
 			};
 
-			this.node = factory(this.props);
-			this.tabList = findChildByRole(this.node, 'tablist');
-			this.tabs = findChildrenByRole(this.tabList, 'tab');
-			this.panels = findChildrenByRole(this.node, 'tabpanel');
+			this.focusableBefore = document.createElement('button');
+			this.focusableAfter = document.createElement('button');
+
+			this.sandbox = setupSandbox(
+				this.focusableBefore,
+				factory(this.props),
+				this.focusableAfter
+			);
+
+			this.tabList = this.sandbox.querySelector('[role="tablist"]');
+			this.tabs = this.tabList.querySelectorAll('[role="tab"]');
+			this.panels = this.sandbox.querySelectorAll('[role="tabpanel"]');
 			this.selectedTab = this.tabs[1];
 			this.selectedPanel = this.panels[1];
 			this.button1 = document.getElementById('button1');
 			this.button2 = document.getElementById('button2');
 
-			this.focusableBefore = document.createElement('button');
-			this.focusableAfter = document.createElement('button');
-
-			this.wrapper = document.createElement('div');
-			this.wrapper.appendChild(this.focusableBefore);
-			this.wrapper.appendChild(this.node);
-			this.wrapper.appendChild(this.focusableAfter);
-
-			document.body.appendChild(this.wrapper);
-
 			effroi.keyboard.focus(this.focusableBefore);
-		});
-
-		afterEach(function() {
-			document.body.removeChild(this.wrapper);
 		});
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
