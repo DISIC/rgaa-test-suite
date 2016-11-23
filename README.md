@@ -9,6 +9,7 @@ Cet outil est particulièrement utile si vous voulez :
 - utiliser un seul outil pour tester des composants faits avec plusieurs *frameworks* différents
 
 Note : le référentiel se base sur [les *design patterns* ARIA](https://www.w3.org/TR/wai-aria-practices) et ajoute des règles sur certains composants.
+Vous trouverez la grille de tests ayant servi de référence pour l'implémentation de la librairie dans le dossier `./resources` : [2016-11-23-Test_DP_ARIA_grille_de_saisie-V2.1.ods](./resources/2016-11-23-Test_DP_ARIA_grille_de_saisie-V2.1.ods).
 
 ## Avertissement
 
