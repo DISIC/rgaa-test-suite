@@ -229,10 +229,12 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							]
 						};
 						const node = factory(props);
+						const titles = findChildrenByRole(node, 'tab');
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
-						node.appendChild(input);
-						const titles = findChildrenByRole(node, 'tab');
+
+						document.body.appendChild(node);
+						document.body.appendChild(input);
 
 						effroi.keyboard.focus(input);
 						effroi.keyboard.shiftTab();
