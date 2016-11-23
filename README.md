@@ -1,12 +1,11 @@
 # Suite de tests pour composants RGAA 3
 
-Une suite de tests [mocha](https://github.com/mochajs/mocha) pour tester la conformité de composants JavaScript avec le référentiel RGAA 3.  
-Testez rapidement n'importe quel composant suivant les *design patterns* *Accordion*, *Dialog*, *ProgressBar*, et plein d'autres.
+Une suite de tests [mocha](https://github.com/mochajs/mocha) pour tester la conformité de composants JavaScript avec les *design patterns* ARIA *Accordion*, *Dialog*, *ProgressBar*, *RadioButton*, *Checkbox*, *Slider*, *TabPanel* et *Tooltip*.
 
 Cet outil est particulièrement utile si vous voulez :
 - créer ou maintenir un composant JavaScript suivant un *design pattern*, en vous assurant tout au long du développement qu'il est accessible
 - utiliser une bibliothèque JavaScript existante et vérifier qu'elle est accessible
-- utiliser un seul outil pour tester des composants faits avec plusieurs *frameworks* différents
+- utiliser un seul outil pour tester des composants implémentés avec différents *frameworks*
 
 Note : le référentiel se base sur [les *design patterns* ARIA](https://www.w3.org/TR/wai-aria-practices) et ajoute des règles sur certains composants.
 Vous trouverez la grille de tests ayant servi de référence pour l'implémentation de la librairie dans le dossier `./resources` : [2016-11-23-Test_DP_ARIA_grille_de_saisie-V2.1.ods](./resources/2016-11-23-Test_DP_ARIA_grille_de_saisie-V2.1.ods).
@@ -26,7 +25,8 @@ npm install --save-dev rgaa-test-suite
 
 Les tests nécessitent un DOM pour fonctionner. C'est pourquoi un lanceur de tests comme [karma](https://github.com/karma-runner/karma) ou un DOM virtuel comme [jsdom](https://github.com/tmpvar/jsdom) est requis.
 
-Pour démarrer, vous pouvez vous inspirer du dossier [template](./template), qui contient une structure de projet pour lancer des tests avec mocha et karma.
+Pour démarrer, vous pouvez vous inspirer du dossier [./template](./template), qui contient une structure de projet pour lancer des tests avec mocha et karma.
+Copiez ce dossier où vous le souhaitez, puis lancez `npm install` à la racine.
 
 ## Usage
 
@@ -39,7 +39,7 @@ Ce fonctionnement permet à la suite de tests de rester générique, et de fonct
 
 ### Exemple
 
-Dans le projet de test [template](./template), vous pourriez remplir le fichier `test/index.js` avec ça pour tester une barre de progression :
+Voici un exemple d'implémentation du test d'une *ProgressBar* :
 
 ```js
 var testSuite = require('rgaa-test-suite');
@@ -48,10 +48,11 @@ var testSuite = require('rgaa-test-suite');
  * Une factory prenant en paramètre les options nécessaires
  * pour le test (ici min, max, et value).
  * Cette fonction doit retourner un élément de DOM contenant
- * le composant à tester.
+ * le composant à tester, ici une ProgressBar.
  */
 function progressBarFactory(options) {
   var node = document.createElement('div');
+  node.setAttribute('role', 'progressbar');
   node.setAttribute('aria-valuemin', options.min);
   node.setAttribute('aria-valuemax', options.max);
   node.setAttribute('aria-value', options.value);
@@ -64,6 +65,8 @@ function progressBarFactory(options) {
  */
 describe('Ma super barre de progression', testSuite.progressBar(progressBarFactory));
 ```
+
+Note : si vous avez utilisé le dossier [./template](./template), vous pouvez tester cet exemple en créant un fichier `test/progressBar.js`, et en y copiant le code ci-dessus.
 
 Au lancement de mocha, `progressBar()` exécutera tous les tests du motif de conception :
 
