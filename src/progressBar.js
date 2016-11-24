@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import {random} from 'lodash';
-import {findChildByRole} from './dom';
 import pending from './pending';
 import describeSome from './describeSome';
+import setupSandbox from './setupSandbox';
 
 
 
@@ -31,8 +31,8 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 						value: random(30, 70)
 					};
 
-					this.node = factory(this.props);
-					this.progressBar = findChildByRole(this.node, 'progressbar');
+					this.sandbox = setupSandbox(factory(this.props));
+					this.progressBar = this.sandbox.querySelector('[role="progressbar"]');
 				});
 
 				it('Le composant possède un role="progressbar".', function() {
@@ -59,8 +59,8 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 						value: random(30, 70)
 					};
 
-					this.node = factory(this.props);
-					this.progressBar = findChildByRole(this.node, 'progressbar');
+					this.sandbox = setupSandbox(factory(this.props));
+					this.progressBar = this.sandbox.querySelector('[role="progressbar"]');
 				});
 
 				it('Le composant est constitué d\'une image qui possède un attribut alt pertinent.', function() {
@@ -87,8 +87,8 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 						value: random(30, 70)
 					};
 
-					this.node = factory(this.props);
-					this.progressBar = findChildByRole(this.node, 'progressbar');
+					this.sandbox = setupSandbox(factory(this.props));
+					this.progressBar = this.sandbox.querySelector('[role="progressbar"]');
 				});
 
 				it('Le composant possède une propriété aria-valuenow="[valeur courante]".', function() {
@@ -118,8 +118,8 @@ export default (factory, makeLabel = defaultMakeLabel) => () =>
 						value: undefined
 					};
 
-					this.node = factory(this.props);
-					this.progressBar = findChildByRole(this.node, 'progressbar');
+					this.sandbox = setupSandbox(factory(this.props));
+					this.progressBar = this.sandbox.querySelector('[role="progressbar"]');
 				});
 
 				it('Le composant ne possède pas de propriété aria-valuenow.', function() {

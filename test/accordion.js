@@ -1,7 +1,7 @@
 import {render, createElement} from 'react';
 import ReactBootstrap from 'react-bootstrap';
 import RgaaReactBootstrap from 'rgaa_react-bootstrap';
-import {accordion, createWrapper} from '../src';
+import {accordion} from '../src';
 
 
 
@@ -30,7 +30,7 @@ describe(
 			);
 		});
 
-		const node = createWrapper('rgaa-react-bootstrap-accordion');
+		const node = document.createElement('div');
 
 		render(
 			createElement(

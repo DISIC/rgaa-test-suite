@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import effroi from 'effroi';
-import {findChildByRole} from './dom';
 import pending from './pending';
-import cleanDom from './cleanDom';
+import setupSandbox from './setupSandbox';
+
 
 
 /**
@@ -28,10 +28,6 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 	return function testTristateCheckbox() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1 : Le composant respecte-t-il ces conditions ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('Le composant possède un role="checkbox".', function() {
 					const props = {
 						state: false,
@@ -44,9 +40,9 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						title: 'Sandwich Condiments'
 					};
 
-					let node = factory(props);
-					let checkboxes = getChildrenCheckboxes(node);
-					let mainCheckbox = checkboxes[0];
+					const sandbox = setupSandbox(factory(props));
+					const checkboxes = getChildrenCheckboxes(sandbox);
+					const mainCheckbox = checkboxes[0];
 
 					expect(mainCheckbox).to.be.ok;
 				});
@@ -63,9 +59,9 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						title: 'Sandwich Condiments'
 					};
 
-					let node = factory(props);
-					let checkboxes = getChildrenCheckboxes(node);
-					let mainCheckbox = checkboxes[0];
+					const sandbox = setupSandbox(factory(props));
+					const checkboxes = getChildrenCheckboxes(sandbox);
+					const mainCheckbox = checkboxes[0];
 
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('true');
 				});
@@ -82,9 +78,9 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						title: 'Sandwich Condiments'
 					}
 
-					let node = factory(props);
-					let checkboxes = getChildrenCheckboxes(node);
-					let mainCheckbox = checkboxes[0];
+					const sandbox = setupSandbox(factory(props));
+					const checkboxes = getChildrenCheckboxes(sandbox);
+					const mainCheckbox = checkboxes[0];
 
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('false');
 				});
@@ -101,9 +97,9 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						title: 'Sandwich Condiments'
 					};
 
-					let node = factory(props);
-					let checkboxes = getChildrenCheckboxes(node);
-					let mainCheckbox = checkboxes[0];
+					const sandbox = setupSandbox(factory(props));
+					const checkboxes = getChildrenCheckboxes(sandbox);
+					const mainCheckbox = checkboxes[0];
 
 					expect(mainCheckbox.getAttribute('aria-checked')).to.equal('mixed');
 				});
@@ -120,9 +116,9 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						title: 'Sandwich Condiments'
 					};
 
-					let node = factory(props);
-					let checkboxes = getChildrenCheckboxes(node);
-					let mainCheckbox = checkboxes[0];
+					const sandbox = setupSandbox(factory(props));
+					const checkboxes = getChildrenCheckboxes(sandbox);
+					const mainCheckbox = checkboxes[0];
 
 					expect(mainCheckbox.getAttribute('tabindex')).to.equal('0');
 				});
@@ -140,13 +136,10 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						],
 						title: 'Sandwich Condiments'
 					};
-					this.node = factory(this.props);
-					this.images = this.node.querySelectorAll('img');
-					this.presentationImages = this.node.querySelectorAll('img[role="presentation"]');
-				});
 
-				after(function() {
-					cleanDom();
+					const sandbox = setupSandbox(factory(this.props));
+					this.images = sandbox.querySelectorAll('img');
+					this.presentationImages = sandbox.querySelectorAll('img[role="presentation"]');
 				});
 
 				it('L\'image possède le role="presentation".', function() {
@@ -175,12 +168,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 						title: 'Sandwich Condiments'
 					};
 
-					this.node = factory(this.props);
-					this.structuringNode = this.node.querySelectorAll('[role=group]')[0];
-				});
-
-				afterEach(function() {
-					cleanDom();
+					const sandbox = setupSandbox(factory(this.props));
+					this.structuringNode = sandbox.querySelectorAll('[role=group]')[0];
 				});
 
 				it('L\'élément structurant le groupe possède un role="group".', function() {
@@ -202,10 +191,6 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 			});
 
 			describe('Test 1.4 : Chaque case à cocher qui supporte un triple état et qui représente l\'état d\'un groupe de cases à cocher, respecte-t-elle ces conditions ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('L\'élément possède une propriété aria-checked="false" lorsqu\'aucune case à cocher du groupe n\'est cochée.',
 					function() {
 						const props = {
@@ -219,8 +204,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							title: 'Sandwich Condiments'
 						};
 
-						const node = factory(props);
-						const checkboxes = getChildrenCheckboxes(node);
+						const sandbox = setupSandbox(factory(props));
+						const checkboxes = getChildrenCheckboxes(sandbox);
 						const mainCheckbox = checkboxes[0];
 						const firstNestedCheckbox = checkboxes[1];
 
@@ -242,8 +227,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							title: 'Sandwich Condiments'
 						};
 
-						const node = factory(props);
-						const checkboxes = getChildrenCheckboxes(node);
+						const sandbox = setupSandbox(factory(props));
+						const checkboxes = getChildrenCheckboxes(sandbox);
 						const mainCheckbox = checkboxes[0];
 						const firstNestedCheckbox = checkboxes[1];
 
@@ -265,8 +250,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							title: 'Sandwich Condiments'
 						};
 
-						const node = factory(props);
-						const checkboxes = getChildrenCheckboxes(node);
+						const sandbox = setupSandbox(factory(props));
+						const checkboxes = getChildrenCheckboxes(sandbox);
 						const mainCheckbox = checkboxes[0];
 						const firstNestedCheckbox = checkboxes[1];
 
@@ -279,10 +264,6 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : Pour chaque composant, l\'utilisation de la touche [Espace] respecte-t-elle ces conditions ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('[Espace] permet de cocher le composant s\'il n\'est pas coché.',
 					function() {
 						const props = {
@@ -296,8 +277,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							title: 'Sandwich Condiments'
 						};
 
-						const node = factory(props);
-						const checkboxes = getChildrenCheckboxes(node);
+						const sandbox = setupSandbox(factory(props));
+						const checkboxes = getChildrenCheckboxes(sandbox);
 						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
@@ -321,8 +302,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							title: 'Sandwich Condiments'
 						};
 
-						const node = factory(props);
-						const checkboxes = getChildrenCheckboxes(node);
+						const sandbox = setupSandbox(factory(props));
+						const checkboxes = getChildrenCheckboxes(sandbox);
 						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event
@@ -335,10 +316,6 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 			});
 
 			describe('Test 2.2 :  Pour chaque composant qui supporte un triple état, l\'utilisation de la touche [Espace] respecte-t-elle cette condition ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('Si le composant est partiellement coché, [Espace] permet de cocher le composant.',
 					function() {
 						const props = {
@@ -352,8 +329,8 @@ export default function createTristateCheckboxTest(factory, makeLabel = defaultM
 							title: 'Sandwich Condiments'
 						};
 
-						const node = factory(props);
-						const checkboxes = getChildrenCheckboxes(node);
+						const sandbox = setupSandbox(factory(props));
+						const checkboxes = getChildrenCheckboxes(sandbox);
 						const mainCheckbox = checkboxes[0];
 
 						// Simulates keyboard space event

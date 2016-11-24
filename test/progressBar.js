@@ -17,9 +17,7 @@ describe(
 			label: '%(percent)s%'
 		};
 
-		const node = createWrapper(
-			'rgaa-react-bootstrap-progress-bar'
-		);
+		const node = document.createElement('div');
 
 		render(
 			createElement(RgaaReactBootstrap.ProgressBar, props),

@@ -1,4 +1,4 @@
-import {tooltip, createWrapper} from '../src';
+import {tooltip} from '../src';
 
 
 

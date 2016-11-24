@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import effroi from 'effroi';
-import {findChildByRole} from './dom';
 import pending from './pending';
-import cleanDom from './cleanDom';
+import setupSandbox from './setupSandbox';
+
 
 
 /**
@@ -23,17 +23,13 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 	return function testSimpleCheckbox() {
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
 			describe('Test 1.1 : Le composant respecte-t-il ces conditions ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('Le composant possède un role="checkbox".', function() {
 					const props = {
 						checked: true
 					};
 
-					let node = factory(props);
-					let checkbox = findChildByRole(node, 'checkbox');
+					const sandbox = setupSandbox(factory(props));
+					const checkbox = sandbox.querySelector('[role="checkbox"]');
 
 					expect(checkbox).to.be.ok;
 				});
@@ -43,8 +39,8 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 						checked: true
 					};
 
-					let node = factory(props);
-					let checkbox = findChildByRole(node, 'checkbox');
+					const sandbox = setupSandbox(factory(props));
+					const checkbox = sandbox.querySelector('[role="checkbox"]');
 
 					expect(checkbox.getAttribute('aria-checked')).to.equal('true');
 				});
@@ -54,8 +50,8 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 						checked: false
 					};
 
-					let node = factory(props);
-					let checkbox = findChildByRole(node, 'checkbox');
+					const sandbox = setupSandbox(factory(props));
+					const checkbox = sandbox.querySelector('[role="checkbox"]');
 
 					expect(checkbox.getAttribute('aria-checked')).to.equal('false');
 				});
@@ -65,8 +61,8 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 						checked: true
 					};
 
-					let node = factory(props);
-					let checkbox = findChildByRole(node, 'checkbox');
+					const sandbox = setupSandbox(factory(props));
+					const checkbox = sandbox.querySelector('[role="checkbox"]');
 
 					expect(checkbox.getAttribute('tabindex')).to.equal('0');
 				});
@@ -74,16 +70,13 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 
 			describe('Test 1.2 : Chaque état de composant symbolisé par une image respecte-t-il une de ces conditions ?', function() {
 				before(function() {
-					this.props = {
+					const props = {
 						checked: true
 					};
-					this.node = factory(this.props);
-					this.images = this.node.querySelectorAll('img');
-					this.presentationImages = this.node.querySelectorAll('img[role="presentation"]');
-				});
 
-				after(function() {
-					cleanDom();
+					const sandbox = setupSandbox(factory(props));
+					this.images = sandbox.querySelectorAll('img');
+					this.presentationImages = sandbox.querySelectorAll('img[role="presentation"]');
 				});
 
 				it('L\'image possède le role="presentation".', function() {
@@ -101,17 +94,13 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 		})
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : Pour chaque composant, l\'utilisation de la touche [Espace] respecte-t-elle ces conditions ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('[Espace] permet de cocher le composant s\'il n\'est pas coché.', function() {
 					const props = {
 						checked: false
 					};
 
-					const node = factory(props);
-					const checkbox = findChildByRole(node, 'checkbox');
+					const sandbox = setupSandbox(factory(props));
+					const checkbox = sandbox.querySelector('[role="checkbox"]');
 
 					// Simulates keyboard space event
 					effroi.keyboard.focus(checkbox);
@@ -125,8 +114,8 @@ export default function createSimpleCheckboxTest(factory, makeLabel = defaultMak
 						checked: true
 					};
 
-					const node = factory(props);
-					const checkbox = findChildByRole(node, 'checkbox');
+					const sandbox = setupSandbox(factory(props));
+					const checkbox = sandbox.querySelector('[role="checkbox"]');
 
 					// Simulates keyboard space event
 					effroi.keyboard.focus(checkbox);

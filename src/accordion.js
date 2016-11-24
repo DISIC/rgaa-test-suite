@@ -1,8 +1,7 @@
 import {expect} from 'chai';
 import effroi from 'effroi';
-import {findChildByRole, findChildrenByRole} from './dom';
 import describeSome from './describeSome';
-import cleanDom from './cleanDom';
+import setupSandbox from './setupSandbox';
 
 
 
@@ -44,12 +43,9 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							}
 						]
 					};
-					this.node = factory(this.props);
-					this.accordion = findChildByRole(this.node, 'tablist');
-				});
 
-				after(function() {
-					cleanDom();
+					this.sandbox = setupSandbox(factory(this.props));
+					this.accordion = this.sandbox.querySelector('[role="tablist"]');
 				});
 
 				it('Le composant possède un role="tablist".', function() {
@@ -82,13 +78,10 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							}
 						]
 					};
-					this.node = factory(this.props);
-					this.accordion = findChildByRole(this.node, 'tablist');
-					this.titles = findChildrenByRole(this.node, 'tab');
-				});
 
-				after(function() {
-					cleanDom();
+					this.sandbox = setupSandbox(factory(this.props));
+					this.accordion = this.sandbox.querySelector('[role="tablist"]');
+					this.titles = this.sandbox.querySelectorAll('[role="tab"]');
 				});
 
 				it('Le titre possède un role="tab".', function() {
@@ -128,14 +121,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							}
 						]
 					};
-					this.node = factory(this.props);
-					this.accordion = findChildByRole(this.node, 'tablist');
-					this.titles = findChildrenByRole(this.node, 'tab');
-					this.tabPanels = findChildrenByRole(this.accordion, 'tabpanel');
-				});
 
-				after(function() {
-					cleanDom();
+					this.sandbox = setupSandbox(factory(this.props));
+					this.accordion = this.sandbox.querySelector('[role="tablist"]');
+					this.titles = this.sandbox.querySelectorAll('[role="tab"]');
+					this.tabPanels = this.accordion.querySelectorAll('[role="tabpanel"]');
 				});
 
 				it('Le panneau possède un role="tabpanel".', function() {
@@ -176,10 +166,6 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-t-elle ces conditions ?', function() {
-				afterEach(function() {
-					cleanDom();
-				});
-
 				it('De l\'extérieur du composant, lorsque aucun panneau n\'est actif, le focus est donné sur le titre'
 					+ ' du premier panneau [TAB].', function() {
 						const props = {
@@ -201,8 +187,9 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								}
 							]
 						};
-						const node = factory(props);
-						const titles = findChildrenByRole(node, 'tab');
+
+						const sandbox = setupSandbox(factory(props));
+						const titles = sandbox.querySelectorAll('[role="tab"]');
 						effroi.keyboard.tab();
 						expect(document.activeElement).to.equal(titles[0]);
 				});
@@ -228,13 +215,13 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								}
 							]
 						};
-						const node = factory(props);
-						const titles = findChildrenByRole(node, 'tab');
+
+						const sandbox = setupSandbox(factory(props));
+						const titles = sandbox.querySelectorAll('[role="tab"]');
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
 
-						document.body.appendChild(node);
-						document.body.appendChild(input);
+						sandbox.appendChild(input);
 
 						effroi.keyboard.focus(input);
 						effroi.keyboard.shiftTab();
@@ -262,8 +249,9 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								}
 							]
 						};
-						const node = factory(props);
-						const titles = findChildrenByRole(node, 'tab');
+
+						const sandbox = setupSandbox(factory(props));
+						const titles = sandbox.querySelectorAll('[role="tab"]');
 
 						effroi.keyboard.tab();
 						expect(document.activeElement).to.equal(titles[1]);
@@ -291,10 +279,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								}
 							]
 						};
-						const node = factory(props);
-						const accordion = findChildByRole(node, 'tablist');
-						const titles = findChildrenByRole(node, 'tab');
-						const tabPanels = findChildrenByRole(accordion, 'tabpanel');
+
+						const sandbox = setupSandbox(factory(props));
+						const accordion = sandbox.querySelector('[role="tablist"]');
+						const titles = sandbox.querySelectorAll('[role="tab"]');
+						const tabPanels = accordion.querySelectorAll('[role="tabpanel"]');
 
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
@@ -338,13 +327,14 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								}
 							]
 						};
-						const node = factory(props);
+
+						const sandbox = setupSandbox(factory(props));
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
-						node.appendChild(input);
-						const accordion = findChildByRole(node, 'tablist');
+						sandbox.appendChild(input);
+						const accordion = sandbox.querySelector('[role="tablist"]');
 
-						const tabPanels = findChildrenByRole(accordion, 'tabpanel');
+						const tabPanels = accordion.querySelectorAll('[role="tabpanel"]');
 						tabPanels[2].appendChild(input.cloneNode(true));
 						const tabPanelChildren = tabPanels[2].querySelectorAll('input[type="text"]');
 
@@ -377,11 +367,12 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 								}
 							]
 						};
-						const node = factory(props);
+
+						const sandbox = setupSandbox(factory(props));
 						const input = document.createElement('input');
 						input.setAttribute('type', 'text');
-						node.insertBefore(input, node.firstChild);
-						const titles = findChildrenByRole(node, 'tab');
+						sandbox.insertBefore(input, sandbox.firstChild);
+						const titles = sandbox.querySelectorAll('[role="tab"]');
 						effroi.keyboard.focus(titles[0]);
 						effroi.keyboard.shiftTab();
 
@@ -411,13 +402,10 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							}
 						]
 					};
-					this.node = factory(this.props);
-					this.accordion = findChildByRole(this.node, 'tablist');
-					this.titles = findChildrenByRole(this.node, 'tab');
-				});
 
-				after(function() {
-					cleanDom();
+					this.sandbox = setupSandbox(factory(this.props));
+					this.accordion = this.sandbox.querySelector('[role="tablist"]');
+					this.titles = this.sandbox.querySelectorAll('[role="tab"]');
 				});
 
 				it('À partir du titre d\'un accordéon, [Haut et Gauche] permet d\'atteindre le titre précédent.', function() {
@@ -472,14 +460,11 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							}
 						]
 					};
-					this.node = factory(this.props);
-					this.accordion = findChildByRole(this.node, 'tablist');
-					this.titles = findChildrenByRole(this.node, 'tab');
-					this.tabPanels = findChildrenByRole(this.accordion, 'tabpanel');
-				});
 
-				afterEach(function() {
-					cleanDom();
+					this.sandbox = setupSandbox(factory(this.props));
+					this.accordion = this.sandbox.querySelector('[role="tablist"]');
+					this.titles = this.sandbox.querySelectorAll('[role="tab"]');
+					this.tabPanels = this.accordion.querySelectorAll('[role="tabpanel"]');
 				});
 
 				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Espace] permet d\'ouvrir le panneau.', function() {
@@ -503,7 +488,6 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					expect(this.tabPanels[0].getAttribute('aria-hidden'))
 						.to.equal('false');
 				});
-
 			});
 		});
 	};

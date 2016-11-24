@@ -1,6 +1,7 @@
 import {expect} from 'chai';
 import effroi from 'effroi';
 import pending from './pending';
+import setupSandbox from './setupSandbox';
 
 
 
@@ -20,12 +21,22 @@ export default function createRadioButtonTest(factory) {
 					{text: 'Je suis le 4ème élément'}
 				]
 			};
-			this.node = factory(this.props);
-			this.container = this.node.querySelector('[role="radiogroup"]');
-			this.buttons = this.node.querySelectorAll('[role="radio"]');
-			this.images = this.node.querySelectorAll('img');
-			this.presentationImages = this.node.querySelectorAll('img[role="presentation"]');
-			this.checkedButtons = this.node.querySelectorAll('[aria-checked="true"]');
+
+			// A dummy button that serves as the focus starting point.
+			const focusableBefore = document.createElement('button');
+
+			this.sandbox = setupSandbox(
+				focusableBefore,
+				factory(this.props)
+			);
+
+			this.container = this.sandbox.querySelector('[role="radiogroup"]');
+			this.buttons = this.sandbox.querySelectorAll('[role="radio"]');
+			this.images = this.sandbox.querySelectorAll('img');
+			this.presentationImages = this.sandbox.querySelectorAll('img[role="presentation"]');
+			this.checkedButtons = this.sandbox.querySelectorAll('[aria-checked="true"]');
+
+			effroi.keyboard.focus(focusableBefore);
 		});
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
@@ -71,7 +82,6 @@ export default function createRadioButtonTest(factory) {
 
 		describe('Critère 2 : Les interactions au clavier sont-elles conformes ?', function() {
 			beforeEach(function() {
-				this.dummyInput = $('<input type="text" class="slider-dummy" name="dummy" />').appendTo('body').get(0);
 				const cleanProps = {
 					id: 'un-groupe-sans-rien-activé',
 					label: 'Je suis le titre du groupe sans bouton activé',
@@ -82,8 +92,12 @@ export default function createRadioButtonTest(factory) {
 						{text: '4ème bouton'}
 					]
 				};
+
+				this.dummyInput = document.createElement('input');
 				this.cleanNode = factory(cleanProps);
 				this.cleanButtons = this.cleanNode.querySelectorAll('[role="radio"]');
+				this.sandbox.appendChild(this.dummyInput);
+				this.sandbox.appendChild(this.cleanNode);
 			});
 
 			describe('Test 2.1 : L\'utilisation de la touche [TAB] respecte-t-elle ces conditions ?', function() {
@@ -182,15 +196,6 @@ export default function createRadioButtonTest(factory) {
 					expect(document.activeElement).to.equal(this.cleanButtons.item(0));
 				});
 			});
-
-			afterEach(function() {
-				this.dummyInput.remove();
-				this.cleanNode.remove();
-			});
-		});
-
-		afterEach(function() {
-			this.node.remove();
 		});
 	};
 }

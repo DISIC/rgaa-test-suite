@@ -1,6 +1,8 @@
 import {expect} from 'chai';
 import tabbable from 'tabbable';
 import effroi from 'effroi';
+import setupSandbox from './setupSandbox';
+import cleanDom from './cleanDom';
 
 
 
@@ -28,19 +30,12 @@ export default (factory) => () =>
 				text: 'Tooltip'
 			};
 
-			this.node = factory(this.props);
-			this.otherFocusable = document.createElement('button');
+			this.sandbox = setupSandbox(
+				factory(this.props),
+				document.createElement('button') // a dummy button that can be focused
+			);
 
-			this.wrapper = document.createElement('div');
-			this.wrapper.appendChild(this.node);
-			this.wrapper.appendChild(this.otherFocusable);
-
-			// The node needs to be mounted to the DOM as soon
-			// as possible, to handle the case when the tooltip
-			// does not renders besides it.
-			document.body.appendChild(this.wrapper);
-
-			const tabbableChildren = tabbable(this.wrapper);
+			const tabbableChildren = tabbable(this.sandbox);
 
 			if (tabbableChildren.length === 0) {
 				throw new Error(
@@ -57,7 +52,7 @@ export default (factory) => () =>
 		});
 
 		afterEach(function() {
-			document.body.removeChild(this.wrapper);
+			cleanDom();
 		});
 
 		describe('Critère 1 : L\'implémentation ARIA est-elle conforme ?', function() {
