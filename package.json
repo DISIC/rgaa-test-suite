@@ -1,6 +1,6 @@
 {
   "name": "rgaa-test-suite",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A test suite to test JavaScript components for RGAA3 compliancy.",
   "contributors": [
     "Clément Cousein <clement@vtech.fr>",
