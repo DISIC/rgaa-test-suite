@@ -82,6 +82,8 @@ Ma super barre de progression
         ...
 ```
 
+Vous trouverez également des exemples d'implémentation des différents tests dans le dossier [./test](./test).
+
 ### Options des *factories*
 
 Chaque test requiert des options particulières pour initialiser les composants.
