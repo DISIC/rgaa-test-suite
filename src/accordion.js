@@ -64,7 +64,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							{
 								title: 'Header 1',
 								content: 'Content 1',
-								selected: false
+								selected: true
 							},
 							{
 								title: 'Header 2',
@@ -107,7 +107,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							{
 								title: 'Header 1',
 								content: 'Content 1',
-								selected: false
+								selected: true
 							},
 							{
 								title: 'Header 2',
@@ -152,7 +152,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 				);
 
 				it('Le panneau possède la propriété aria-hidden="false" lorsque le panneau est affiché.'
-					+ '\n\t  Le panneau possède la propriété aria-expanded="true" lorsque le panneau est masqué.',
+					+ '\n\t  Le panneau possède la propriété aria-hidden="true" lorsque le panneau est masqué.',
 					function() {
 						this.props.panels.forEach((panel, i) => {
 							const tabPanel = this.tabPanels[i];
@@ -446,7 +446,7 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 							{
 								title: 'Header 1',
 								content: 'Content 1',
-								selected: false
+								selected: true
 							},
 							{
 								title: 'Header 2',
@@ -467,25 +467,25 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 					this.tabPanels = this.accordion.querySelectorAll('[role="tabpanel"]');
 				});
 
-				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Espace] permet d\'ouvrir le panneau.', function() {
+				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Espace] permet d\'ouvrir le panneau. (aria-expanded = true et aria-hidden = false)', function() {
 					// Focus on first panel
-					this.titles[0].focus();
+					this.titles[1].focus();
 					effroi.keyboard.hit('Spacebar');
 
-					expect(this.tabPanels[0].getAttribute('aria-expanded'))
+					expect(this.tabPanels[1].getAttribute('aria-expanded'))
 						.to.equal('true');
-					expect(this.tabPanels[0].getAttribute('aria-hidden'))
+					expect(this.tabPanels[1].getAttribute('aria-hidden'))
 						.to.equal('false');
 				});
 
-				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Entrée] permet d\'ouvrir le panneau.', function() {
+				it('Lorsque le focus est sur le titre d\'un panneau fermé, [Entrée] permet d\'ouvrir le panneau. (aria-expanded = true et aria-hidden = false)', function() {
 					// Focus on first panel
-					this.titles[0].focus();
+					this.titles[1].focus();
 					effroi.keyboard.enter();
 
-					expect(this.tabPanels[0].getAttribute('aria-expanded'))
+					expect(this.tabPanels[1].getAttribute('aria-expanded'))
 						.to.equal('true');
-					expect(this.tabPanels[0].getAttribute('aria-hidden'))
+					expect(this.tabPanels[1].getAttribute('aria-hidden'))
 						.to.equal('false');
 				});
 			});
