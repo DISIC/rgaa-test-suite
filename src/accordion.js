@@ -299,9 +299,6 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 						expect(document.activeElement).to.equal(firstTabPanelChildren[0]);
 
 						effroi.keyboard.tab();
-						expect(document.activeElement).to.equal(titles[1]);
-
-						effroi.keyboard.tab();
 						expect(document.activeElement).to.equal(secondTabPanelChildren[0]);
 					}
 				);
