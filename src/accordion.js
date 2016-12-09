@@ -189,8 +189,14 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 						};
 
 						const sandbox = setupSandbox(factory(props));
+						const input = document.createElement('input');
+						input.setAttribute('type', 'text');
+						sandbox.insertBefore(input, sandbox.firstChild);
 						const titles = sandbox.querySelectorAll('[role="tab"]');
+
+						effroi.keyboard.focus(input);
 						effroi.keyboard.tab();
+
 						expect(document.activeElement).to.equal(titles[0]);
 				});
 
@@ -413,11 +419,9 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 
 					expect(document.activeElement).to.equal(this.titles[0]);
 
-					// Focus on second panel
-					this.titles[1].focus();
 					effroi.keyboard.hit('Left');
 
-					expect(document.activeElement).to.equal(this.titles[0]);
+					expect(document.activeElement).to.equal(this.titles[2]);
 				});
 
 				it('À partir du titre d\'un accordéon, [Bas et Droite] permet d\'atteindre le titre suivant.', function() {
@@ -428,11 +432,9 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 
 					expect(document.activeElement).to.equal(this.titles[2]);
 
-					// Focus on second panel
-					this.titles[1].focus();
 					effroi.keyboard.hit('Right');
 
-					expect(document.activeElement).to.equal(this.titles[2]);
+					expect(document.activeElement).to.equal(this.titles[0]);
 				});
 			});
 
