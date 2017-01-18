@@ -98,6 +98,17 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 						});
 					}
 				);
+
+				it('Le titre possède la propriété aria-expanded="true" lorsque le panneau est affiché.'
+					+ '\n\t  Le titre possède la propriété aria-expanded="false" lorsque le panneau est masqué.',
+					function() {
+						this.props.panels.forEach((panel, i) => {
+							const title = this.titles[i];
+							expect(title.getAttribute('aria-expanded'))
+								.to.equal(panel.selected ? 'true' : 'false');
+						});
+					}
+				);
 			});
 
 			describe('Test 1.3 : Chaque panneau respecte-t-il ces conditions ?', function() {
@@ -139,17 +150,6 @@ export default function createAccordionTest(factory, makeLabel = defaultMakeLabe
 						expect(tabPanel.getAttribute('aria-labelledby')).to.equal(title.id);
 					});
 				});
-
-				it('Le panneau possède la propriété aria-expanded="true" lorsque le panneau est affiché.'
-					+ '\n\t  Le panneau possède la propriété aria-expanded="false" lorsque le panneau est masqué.',
-					function() {
-						this.props.panels.forEach((panel, i) => {
-							const tabPanel = this.tabPanels[i];
-							expect(tabPanel.getAttribute('aria-expanded'))
-								.to.equal(panel.selected ? 'true' : 'false');
-						});
-					}
-				);
 
 				it('Le panneau possède la propriété aria-hidden="false" lorsque le panneau est affiché.'
 					+ '\n\t  Le panneau possède la propriété aria-hidden="true" lorsque le panneau est masqué.',
