@@ -3,9 +3,9 @@
 Une suite de tests [mocha](https://github.com/mochajs/mocha) pour tester la conformité de composants JavaScript avec les *design patterns* ARIA *Accordion*, *Dialog*, *ProgressBar*, *RadioButton*, *Checkbox*, *Slider*, *TabPanel* et *Tooltip*.
 
 Cet outil est particulièrement utile si vous voulez :
-- créer ou maintenir un composant JavaScript suivant un *design pattern*, en vous assurant tout au long du développement qu'il est accessible
-- utiliser une bibliothèque JavaScript existante et vérifier qu'elle est accessible
-- utiliser un seul outil pour tester des composants implémentés avec différents *frameworks*
+- créer ou maintenir un composant JavaScript suivant un *design pattern*, en vous assurant tout au long du développement qu'il est accessible ;
+- utiliser une bibliothèque JavaScript existante et vérifier qu'elle est accessible ;
+- utiliser un seul outil pour tester des composants implémentés avec différents *frameworks*.
 
 Note : le référentiel se base sur [les *design patterns* ARIA](https://www.w3.org/TR/wai-aria-practices) et ajoute des règles sur certains composants.
 Vous trouverez la grille de tests ayant servi de référence pour l'implémentation de la librairie dans le dossier `./resources` : [2016-11-23-Test_DP_ARIA_grille_de_saisie-V2.1.ods](./resources/2016-11-23-Test_DP_ARIA_grille_de_saisie-V2.1.ods).
