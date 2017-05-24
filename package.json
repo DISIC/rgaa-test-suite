@@ -11,7 +11,8 @@
   "scripts": {
     "start": "npm run test -- --watch",
     "build": "babel --out-dir ./lib ./src",
-    "test": "karma start"
+    "test": "karma start",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "chai": "^3.5.0",
