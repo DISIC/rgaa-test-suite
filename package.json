@@ -2,11 +2,7 @@
   "name": "rgaa-test-suite",
   "version": "1.1.2",
   "description": "A test suite to test JavaScript components for RGAA3 compliancy.",
-  "contributors": [
-    "Clément Cousein <clement@vtech.fr>",
-    "Félix Girault <felix@vtech.fr>",
-    "Emmanuel Pelletier <e.pelletier@vtech.fr>"
-  ],
+  "author": "Etat Plateforme <rgaa.sgmap@modernisation.gouv.fr>",
   "main": "lib/index.js",
   "scripts": {
     "start": "npm run test -- --watch",
